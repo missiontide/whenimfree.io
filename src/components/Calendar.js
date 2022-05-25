@@ -1,23 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import App from "../App";
 
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-function Calendar() {
-    const [startDate, setStartDate] = useState(new Date());
+class Calendar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: new Date(),
+        }
+    }
+    render () {
+        return (
+            <DatePicker
+                inline
+                monthsShown={2}
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+            />
+        );
+    }
 
-    return (
-        <DatePicker
-            inline
-            monthsShown={2}
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-        />
-    );
+    handleChange = (startDate) => {
+        this.setState({
+            startDate,
+        });
+    };
 }
 
 export default Calendar;
