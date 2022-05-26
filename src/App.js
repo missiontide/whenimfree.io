@@ -1,4 +1,6 @@
+import EventNameInput from "./components/EventNameInput";
 import Calendar from "./components/Calendar"
+import TimeSelector from "./components/TimeSelector";
 import './App.css';
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
             whenimfree.io
         </header>
         <div>
+            <EventNameInput />
             <Calendar />
+            <TimeSelector />
         </div>
     </div>
   );
