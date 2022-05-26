@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { DayPicker } from 'react-day-picker';
+import { add } from 'date-fns';
 import 'react-day-picker/dist/style.css';
 import '../styles/Calendar.css'
 
 function Calendar() {
-    const initialDays = [];
-    const [days, setDays] = useState(initialDays);
+    const [days, setDays] = useState([]);
 
     const footer =
         days && days.length > 0 ? (
@@ -16,8 +16,10 @@ function Calendar() {
 
     return (
         <DayPicker
+            showOutsideDays
             mode="multiple"
-            min={1}
+            fromDate={new Date()}
+            toDate={add(new Date(), {months: 12})}
             selected={days}
             onSelect={setDays}
             footer={footer}

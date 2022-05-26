@@ -9,7 +9,14 @@ function EventNameInput() {
     }
 
     return (
-        <input value={value} onChange={handleChange}/>
+        <div className="inputDiv">
+            <input
+                value={value}
+                onChange={handleChange}
+                placeholder="event name..."
+                autoFocus
+            />
+        </div>
     );
 }
 
