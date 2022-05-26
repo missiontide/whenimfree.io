@@ -1,6 +1,7 @@
 import EventNameInput from "./components/EventNameInput";
 import Calendar from "./components/Calendar"
 import TimeSelector from "./components/TimeSelector";
+import AvailabilityIndicator from "./components/AvailabilityIndicator";
 import './App.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
             <EventNameInput />
             <Calendar />
             <TimeSelector />
+            <AvailabilityIndicator />
         </div>
     </div>
   );
