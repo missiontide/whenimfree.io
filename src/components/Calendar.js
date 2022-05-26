@@ -1,34 +1,28 @@
-import React from "react";
-import DatePicker from "react-datepicker";
+import React, { useState } from "react";
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import '../styles/Calendar.css'
 
-import "react-datepicker/dist/react-datepicker.css";
+function Calendar() {
+    const initialDays = [];
+    const [days, setDays] = useState(initialDays);
 
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
-class Calendar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            startDate: new Date(),
-        }
-    }
-    render () {
-        return (
-            <DatePicker
-                inline
-                monthsShown={2}
-                selected={this.state.startDate}
-                onChange={this.handleChange}
-            />
+    const footer =
+        days && days.length > 0 ? (
+            <p>You selected {days.length} day(s).</p>
+        ) : (
+            <p>Please pick one or more days.</p>
         );
-    }
 
-    handleChange = (startDate) => {
-        this.setState({
-            startDate,
-        });
-    };
+    return (
+        <DayPicker
+            mode="multiple"
+            min={1}
+            selected={days}
+            onSelect={setDays}
+            footer={footer}
+        />
+    );
 }
 
 export default Calendar;
