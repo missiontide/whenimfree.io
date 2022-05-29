@@ -9,9 +9,9 @@ function Calendar() {
 
     const footer =
         days && days.length > 0 ? (
-            <p>You selected {days.length} day(s).</p>
+            <p>{days.length} day{days.length > 1 && "s"} selected.</p>
         ) : (
-            <p>Please pick one or more days.</p>
+            <p>Select one or more days.</p>
         );
 
     return (
