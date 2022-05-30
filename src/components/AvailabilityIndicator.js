@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
-import WeekCalendar from 'react-week-calendar';
-import 'react-week-calendar/dist/style.css';
+import WeekCalendar from './WeekCalendar/WeekCalendar';
+import './WeekCalendar/style.css';
 
 class AvailabilityIndicator extends React.Component {
     constructor(props) {
@@ -43,13 +43,14 @@ class AvailabilityIndicator extends React.Component {
                 uid: lastUid + index
             }
         });
-
+        console.log(newIntervals)
+        console.log(intervals)
         this.setState({
             selectedIntervals: selectedIntervals.concat(intervals),
             lastUid: lastUid + newIntervals.length
         })
     }
-    
+
     render() {
         return (
             <div>
@@ -64,6 +65,7 @@ class AvailabilityIndicator extends React.Component {
                     onIntervalUpdate={this.handleEventUpdate}
                     onIntervalRemove={this.handleEventRemove}
                     eventSpacing={0}
+                    useModal={false}
                 />
             </div>
         )
