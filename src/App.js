@@ -1,23 +1,45 @@
+import React, { useState, useEffect } from "react";
+
 import EventNameInput from "./components/EventNameInput";
-import Calendar from "./components/Calendar"
+import DayPickerCalendar from "./components/DayPickerCalendar"
 import TimeSelector from "./components/TimeSelector";
-import AvailabilityIndicator from "./components/AvailabilityIndicator";
+import AvailabilityGrid from "./components/AvailabilityGrid";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-        <header className="App-header">
-            whenimfree.io
-        </header>
-        <div>
-            <EventNameInput />
-            <Calendar />
-            <TimeSelector />
-            <AvailabilityIndicator />
+    const [days, setDays] = useState([]);
+    useEffect(() => {
+
+    }, [days]);
+
+    const [startTime, setStartTime] = useState("8:00 AM");
+    const [endTime, setEndTime] = useState("5:00 PM");
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                whenimfree.io
+            </header>
+            <div>
+                <EventNameInput />
+                <DayPickerCalendar
+                    days={days}
+                    setDays={setDays}
+                />
+                <TimeSelector
+                    startTime={startTime}
+                    setStartTime={setStartTime}
+                    endTime={endTime}
+                    setEndTime={setEndTime}
+                />
+                <AvailabilityGrid
+                    selectedDays={days}
+                    startTime={startTime}
+                    endTime={endTime}
+                />
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;

@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormSelect, Row, Col, FloatingLabel } from "react-bootstrap";
 import '../styles/TimeSelector.css'
 
-function TimeSelector() {
-    const [startTime, setStartTime] = useState("");
-    const [endTime, setEndTime] = useState("");
-
-
+function TimeSelector(props) {
     return (
         <div>
             <Row className="g-2">
-                <Col md>
+                <Col sm>
                     <FloatingLabel controlId="floatingSelectGrid" label="From">
-                        <FormSelect value={"8:00 AM"}>
+                        <FormSelect
+                            value={props.startTime}
+                            onChange={(e) => props.setStartTime(e.target.value)
+                        }>
                             <option>12:00 AM</option>
                             <option>1:00 AM</option>
                             <option>2:00 AM</option>
@@ -37,14 +36,15 @@ function TimeSelector() {
                             <option>9:00 PM</option>
                             <option>10:00 PM</option>
                             <option>11:00 PM</option>
-                            <option>12:00 PM</option>
                         </FormSelect>
                     </FloatingLabel>
                 </Col>
-                <Col md>
+                <Col sm>
                     <FloatingLabel controlId="floatingSelectGrid" label="Until">
-                        <FormSelect value={"5:00 PM"}>
-                            <option>12:00 AM</option>
+                        <FormSelect
+                            value={props.endTime}
+                            onChange={(e) => props.setEndTime(e.target.value)}
+                        >
                             <option>1:00 AM</option>
                             <option>2:00 AM</option>
                             <option>3:00 AM</option>
@@ -68,7 +68,7 @@ function TimeSelector() {
                             <option>9:00 PM</option>
                             <option>10:00 PM</option>
                             <option>11:00 PM</option>
-                            <option>12:00 PM</option>
+                            <option>12:00 AM</option>
                         </FormSelect>
                     </FloatingLabel>
                 </Col>

@@ -1,3 +1,3 @@
 # whenimfree.io
 
-Quickly get the availability of your friends.
+Quickly see when your friends are free.
