@@ -1,4 +1,31 @@
 .dayColumn {
     display: inline-grid;
-    border: black;
+    margin: 5px;
+}
+
+.dayCell {
+    height: 9px;
+    width: 44px;
+    border-style: solid;
+    border-width: 0 1px 0 1px;
+}
+
+.dayCell.selected {
+    background: rgb(51, 153, 0);
+}
+
+/* border styling */
+.dayCell.hour {
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+}
+
+.dayCell.thirty {
+    border-style: dotted solid none solid;
+    border-width: 1px 1px 0 1px;
+}
+
+.dayCell:last-child {
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
 }

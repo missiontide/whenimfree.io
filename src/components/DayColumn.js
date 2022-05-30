@@ -6,6 +6,8 @@ function DayColumn(props) {
             {props.rows.map((interval, rowIdx) => {return (
                 <DayCell
                     key={rowIdx}
+                    rowIdx={rowIdx}
+                    interval={interval}
                 />
             )})}
         </div>
