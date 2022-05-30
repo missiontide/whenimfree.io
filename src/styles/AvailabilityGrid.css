@@ -1,7 +1,13 @@
+.timeColumn { display: inline-grid; text-align: right }
+.timeColumn .spacer { margin-bottom: 15px;}
+.timeColumn .timeCell { font-size: 10px; height: 9px; }
+
 .dayColumn {
     display: inline-grid;
     margin: 5px;
 }
+.dayColumn .date { font-size: 10px; }
+.dayColumn .day { font-size: 16px; margin-top: -6px}
 
 .dayCell {
     height: 9px;

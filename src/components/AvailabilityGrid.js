@@ -3,6 +3,7 @@ import { parse, add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 
 import '../styles/AvailabilityGrid.css'
+import TimeColumn from "./TimeColumn";
 
 function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
@@ -39,10 +40,16 @@ function AvailabilityGrid(props) {
 
     return (
         <div className="availabilityGrid">
+            {intervalsGrid.length > 0 &&
+                <TimeColumn
+                    timeIntervals={intervalsGrid[0]}
+                />
+            }
+
             {intervalsGrid.map((col, colIdx) => { return (
                 <DayColumn
                     key={colIdx}
-                    rows={col}
+                    timeIntervals={col}
                 />
             )})}
         </div>
