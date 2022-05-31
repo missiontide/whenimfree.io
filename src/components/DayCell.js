@@ -6,8 +6,17 @@ function DayCell(props) {
     if (props.rowIdx % 4 === 0) className = "hour"
     else if ((props.rowIdx - 2) % 4 === 0) className = "thirty"
 
-    if (props.interval['selected'] === true) {
-        className += " selected"
+    switch (props.interval['liveHighlight']) {
+        case "selecting":
+            className += " selected"
+            break;
+        case "removing":
+            break;
+        default: // not being live highlighted -- display saved selected status
+            if (props.interval['selected'] === true) {
+                className += " selected"
+            }
+            break;
     }
 
     return (

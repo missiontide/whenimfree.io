@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { parse, add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 
@@ -11,6 +11,7 @@ interval object {
     selected: bool
     coldIdx: index of day columns
     rowIdx: index of interval
+    liveHighlight: "selecting" || "removing" || null
 }
  */
 
@@ -43,6 +44,7 @@ function AvailabilityGrid(props) {
                     selected: false,
                     colIdx: colIdx,
                     rowIdx: rowIdx,
+                    liveHighlight: null,
                 })
                 startDatetime = add(startDatetime, {minutes: 15})
                 rowIdx++;
@@ -79,30 +81,69 @@ function AvailabilityGrid(props) {
         setIntervalsGrid(newIntervalsGrid)
     }
 
+    /*
+    MOUSE OVER: Highlight the cells within origin -> toHere selection
+     */
+    const [toHere, setToHere] = useState({colIdx: undefined, rowIdx: undefined})
+    useEffect(() => {
+        if (toHere['colIdx'] === undefined) return;
+
+        applyMouseOverHighlights()
+    }, [toHere])
+
+    function handleMouseOver(selectedInterval) {
+        if (selecting || removing) {
+            setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
+        }
+    }
+
+    function applyMouseOverHighlights() {
+        const newIntervalsGrid = intervalsGrid.slice();
+        // select or de-select all cols and rows between origin and this interval
+        for (let i = 0; i < intervalsGrid.length; i++) {
+            for (let j = 0; j < intervalsGrid[0].length; j++) {
+                if (Math.min(toHere.colIdx, origin.colIdx) <= i // within the origin -> toHere selection
+                        && i <= Math.max(toHere.colIdx, origin.colIdx)
+                        && Math.min(toHere.rowIdx, origin.rowIdx) <= j
+                        && j <= Math.max(toHere.rowIdx, origin.rowIdx)
+                ){
+                    if (selecting) newIntervalsGrid[i][j].liveHighlight = "selecting";
+                    if (removing) newIntervalsGrid[i][j].liveHighlight = "removing";
+                } else {
+                    newIntervalsGrid[i][j].liveHighlight = null;
+                }
+
+            }
+        }
+
+        setIntervalsGrid(newIntervalsGrid)
+    }
+
     function handleMouseUp() {
-        console.log("MOUSEUP!!!")
+        saveSelectionState();
+
+        // cleanup
         setSelecting(false)
         setRemoving(false)
+        setToHere({colIdx: undefined, rowIdx: undefined});
         document.removeEventListener("mouseup", handleMouseUp)
     }
 
-    function handleMouseOver(selectedInterval) {
-        // console.log(`${origin.colIdx}, ${origin.rowIdx}`)
-        if (selecting || removing) {
-            const newIntervalsGrid = intervalsGrid.slice();
-            const {colIdx, rowIdx} = selectedInterval
+    // iterate through intervals and set selected based on liveHighlight status
+    // then sets all liveHighlight to null
+    function saveSelectionState() {
+        const newIntervalsGrid = intervalsGrid.slice();
 
-            // select or de-select all cols and rows between origin and this interval
-            for (let i = Math.min(colIdx, origin.colIdx); i <= Math.max(colIdx, origin.colIdx); i++) {
-                for (let j = Math.min(rowIdx, origin.rowIdx); j <= Math.max(rowIdx, origin.rowIdx); j++) {
-                    // console.log(`${i}, ${j}`)
-                    if (selecting) newIntervalsGrid[i][j].selected = true;
-                    if (removing) newIntervalsGrid[i][j].selected = false;
-                }
+        for (let i = 0; i < newIntervalsGrid.length; i++) {
+            for (let j = 0; j < newIntervalsGrid[0].length; j++) {
+                let interval = newIntervalsGrid[i][j];
+                if (interval.liveHighlight === "selecting") interval.selected = true;
+                if (interval.liveHighlight === "removing") interval.selected = false;
+                interval.liveHighlight = null;
             }
-
-            setIntervalsGrid(newIntervalsGrid)
         }
+
+        setIntervalsGrid(newIntervalsGrid)
     }
 
     return (
