@@ -6,7 +6,7 @@ function DayColumn(props) {
     const day = format(props.timeIntervals[0].time, "eee")
 
     return (
-        <div className="dayColumn">
+        <div className="dayColumn disable-select">
             <div className="date">
                 {date}
                 <div className="day">{day}</div>
@@ -16,6 +16,8 @@ function DayColumn(props) {
                     key={rowIdx}
                     rowIdx={rowIdx}
                     interval={interval}
+                    onMouseDown={props.onMouseDown}
+                    onMouseOver={props.onMouseOver}
                 />
             )})}
         </div>

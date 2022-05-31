@@ -11,7 +11,11 @@ function DayCell(props) {
     }
 
     return (
-        <div className={`dayCell ${className}`}>
+        <div
+            className={`dayCell ${className}`}
+            onMouseDown={() => props.onMouseDown(props.interval)}
+            onMouseOver={() => props.onMouseOver(props.interval)}
+        >
         </div>
     );
 }

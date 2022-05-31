@@ -9,7 +9,7 @@ function TimeColumn(props) {
     timesToDisplay.push(finalTime)
 
     return (
-        <div className="timeColumn">
+        <div className="timeColumn disable-select">
             <div className="spacer"></div>
             {timesToDisplay.map((time, idx) =>
                 <div className="timeCell" key={idx}>
