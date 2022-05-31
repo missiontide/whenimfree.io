@@ -14,6 +14,7 @@ function AvailabilityGrid(props) {
     // initializing intervals grid
     useEffect(() => {
         const newIntervalsGrid = [];
+        selectedDays.sort((a,b) => {return new Date(a) - new Date(b)}); // sort the days
 
         // each column is a selected day
         selectedDays.forEach((datetime) => {
@@ -21,7 +22,9 @@ function AvailabilityGrid(props) {
 
             // start and end is the selected day + start time and end time respectively
             let startDatetime = add(new Date(datetime.getTime()), {hours: startTime().getHours()})
-            let endDatetime = add(new Date(datetime.getTime()), {hours: endTime().getHours()})
+            let endTimeHours = endTime().getHours();
+            let endDatetime = add(new Date(datetime.getTime()), {hours: endTimeHours === 0 ? 24 : endTimeHours})
+
 
             while (!isEqual(startDatetime, endDatetime)) {
                 // each row is a time intervals in the day
