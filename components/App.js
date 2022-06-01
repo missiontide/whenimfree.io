@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import EventNameInput from "./EventNameInput";
 import DayPickerCalendar from "./DayPickerCalendar"
 import TimeSelector from "./TimeSelector";
+import SubmitButton from "./SubmitButton";
 import AvailabilityGrid from "./AvailabilityGrid";
 
 function App() {
     const [days, setDays] = useState([]);
-    useEffect(() => {
-
-    }, [days]);
+    // useEffect(() => {
+    //
+    // }, [days]);
 
     const [startTime, setStartTime] = useState("8:00 AM");
     const [endTime, setEndTime] = useState("5:00 PM");
+
+    function handleSubmit() {
+
+    }
 
     return (
         <div className="App">
@@ -30,6 +35,9 @@ function App() {
                     setStartTime={setStartTime}
                     endTime={endTime}
                     setEndTime={setEndTime}
+                />
+                <SubmitButton
+                    onClick={handleSubmit}
                 />
                 <AvailabilityGrid
                     selectedDays={days}
