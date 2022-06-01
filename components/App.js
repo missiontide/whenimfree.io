@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import EventNameInput from "./components/EventNameInput";
-import DayPickerCalendar from "./components/DayPickerCalendar"
-import TimeSelector from "./components/TimeSelector";
-import AvailabilityGrid from "./components/AvailabilityGrid";
-import './App.css';
+import EventNameInput from "./EventNameInput";
+import DayPickerCalendar from "./DayPickerCalendar"
+import TimeSelector from "./TimeSelector";
+import AvailabilityGrid from "./AvailabilityGrid";
 
 function App() {
     const [days, setDays] = useState([]);

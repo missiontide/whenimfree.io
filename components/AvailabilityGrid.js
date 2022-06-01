@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import { parse, add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
-
-import '../styles/AvailabilityGrid.css'
 import TimeColumn from "./TimeColumn";
 
 /*

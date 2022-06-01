@@ -1,6 +1,5 @@
 import React from "react";
 import { FormSelect, Row, Col, FloatingLabel } from "react-bootstrap";
-import '../styles/TimeSelector.css'
 
 function TimeSelector(props) {
     return (
