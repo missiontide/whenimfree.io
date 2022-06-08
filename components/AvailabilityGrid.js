@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import { parse, add, isEqual } from 'date-fns';
+import { add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 
@@ -15,8 +15,8 @@ interval object {
 
 function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
-    const startTime = () => {return parse(props.startTime, "p", new Date())}
-    const endTime = () => {return parse(props.endTime, "p", new Date())}
+    const startTime = new Date(props.startTime);
+    const endTime = new Date(props.endTime);
     const [intervalsGrid, setIntervalsGrid] = useState([])
 
     // initializing intervals grid
@@ -26,12 +26,14 @@ function AvailabilityGrid(props) {
 
         // create a column for each selected day
         selectedDays.forEach((datetime, colIdx) => {
+            datetime = new Date(datetime);
+            let date = new Date(datetime.toDateString())// remove time component
             const newDayColumn = [];
 
             // calculating start & end datetime: start and end is the selected day + start time and end time respectively
-            let startDatetime = add(new Date(datetime.getTime()), {hours: startTime().getHours()})
-            let endTimeHours = endTime().getHours();
-            let endDatetime = add(new Date(datetime.getTime()), {hours: endTimeHours === 0 ? 24 : endTimeHours})
+            let startDatetime = add(new Date(date.getTime()), {hours: startTime.getHours()})
+            let endTimeHours = endTime.getHours();
+            let endDatetime = add(new Date(date.getTime()), {hours: endTimeHours === 0 ? 24 : endTimeHours})
 
             let rowIdx = 0;
             // add an interval for every 15 minutes from start time to end time
@@ -59,6 +61,9 @@ function AvailabilityGrid(props) {
     const [removing, setRemoving] = useState(false)
     const [origin, setOrigin] = useState({colIdx: undefined, rowIdx: undefined})
 
+    /*
+    MOUSE DOWN: set origin and whether user is selecting or removing
+    */
     function handleMouseDown(selectedInterval) {
         const newIntervalsGrid = intervalsGrid.slice();
         const {colIdx, rowIdx} = selectedInterval

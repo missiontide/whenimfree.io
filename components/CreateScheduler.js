@@ -13,6 +13,7 @@ function CreateScheduler() {
     const [startTime, setStartTime] = useState("8:00 AM");
     const [endTime, setEndTime] = useState("5:00 PM");
 
+    // create the scheduler and redirect user to the Availability Page
     function handleSubmit() {
         fetch('/api/create-scheduler', {
             method: 'POST',
@@ -20,7 +21,7 @@ function CreateScheduler() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                url: 'asdfjkl',
+                url: createUniqueURL(),
                 eventName: eventName,
                 days: days,
                 startTime: parse(startTime, "p", new Date()),
@@ -58,14 +59,13 @@ function CreateScheduler() {
                 <SubmitButton
                     onClick={handleSubmit}
                 />
-                {/*<AvailabilityGrid*/}
-                {/*    selectedDays={days}*/}
-                {/*    startTime={startTime}*/}
-                {/*    endTime={endTime}*/}
-                {/*/>*/}
             </div>
         </div>
     );
+}
+
+function createUniqueURL() {
+    return "gthlkji"
 }
 
 export default CreateScheduler;

@@ -13,14 +13,18 @@ export default function handler(req, res) {
     const db = require('knex')(dbConfig['development'])
     db('scheduler')
         .insert({
-            url: 'x6789',
+            url: req.body.url,
             eventName: req.body.eventName,
             days: req.body.days,
             startTime: req.body.startTime,
             endTime: req.body.endTime,
         })
+        .then(() => {
+            res.redirect('/' + req.body.url)
+        })
         .catch((err) => {
             res.status(400).send(err)
         })
+        .finally(() => {db.destroy();})
     // res.status(200).json({ name: 'CREATING' })
 }
