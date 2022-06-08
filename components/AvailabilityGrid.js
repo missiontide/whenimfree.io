@@ -3,6 +3,7 @@ import { add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 import AvailabilityList from "./AvailabilityList";
+import ClearButton from "./ClearButton";
 
 /*
 interval object {
@@ -176,45 +177,69 @@ function AvailabilityGrid(props) {
     function saveSelectionState() {
         const newIntervalsGrid = props.intervalsGrid.slice();
 
+        let count = 0; // for setting somethingSelected
         for (let i = 0; i < newIntervalsGrid.length; i++) {
             for (let j = 0; j < newIntervalsGrid[0].length; j++) {
                 let interval = newIntervalsGrid[i][j];
                 if (interval.mouseoverHighlightAction === "selecting") interval.selected = true;
                 if (interval.mouseoverHighlightAction === "removing") interval.selected = false;
                 interval.mouseoverHighlightAction = null;
+                if (interval.selected === true) count++;
+            }
+        }
+        setSomethingSelected(count > 0)
+        props.setIntervalsGrid(newIntervalsGrid)
+    }
+
+    const [somethingSelected, setSomethingSelected] = useState(false)
+    function clearSelection() {
+        const newIntervalsGrid = props.intervalsGrid.slice();
+
+        for (let i = 0; i < newIntervalsGrid.length; i++) {
+            for (let j = 0; j < newIntervalsGrid[0].length; j++) {
+                newIntervalsGrid[i][j].selected = false;
             }
         }
 
         props.setIntervalsGrid(newIntervalsGrid)
+        setSomethingSelected(false)
     }
 
     return (
-        <div className="availabilityGrid">
-            {props.intervalsGrid.length > 0 &&
-                <TimeColumn
-                    timeIntervals={props.intervalsGrid[0]}
-                />
-            }
+        <>
+            <div className="availabilityGrid">
+                {props.intervalsGrid.length > 0 &&
+                    <TimeColumn
+                        timeIntervals={props.intervalsGrid[0]}
+                    />
+                }
 
-            {props.intervalsGrid.map((col, colIdx) => { return (
-                <DayColumn
-                    key={colIdx}
-                    timeIntervals={col}
-                    maxAvailableCount={maxAvailableCount}
-                    onMouseDown={handleMouseDown}
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                />
-            )})}
-            {true &&
-                <AvailabilityList
-                    totalNames={props.availabilities.length}
-                    intervalDatetime={intervalDatetime}
-                    namesAvailable={namesAvailable}
-                    namesUnavailable={namesUnavailable}
+                {props.intervalsGrid.map((col, colIdx) => { return (
+                    <DayColumn
+                        key={colIdx}
+                        timeIntervals={col}
+                        maxAvailableCount={maxAvailableCount}
+                        onMouseDown={handleMouseDown}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                    />
+                )})}
+                {showList &&
+                    <AvailabilityList
+                        totalNames={props.availabilities.length}
+                        intervalDatetime={intervalDatetime}
+                        namesAvailable={namesAvailable}
+                        namesUnavailable={namesUnavailable}
+                    />
+                }
+            </div>
+            {somethingSelected &&
+                <ClearButton
+                    text="Clear Selection"
+                    onClick={clearSelection}
                 />
             }
-        </div>
+        </>
     )
 }
 
