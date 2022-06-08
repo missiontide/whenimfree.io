@@ -129,10 +129,12 @@ function AvailabilityGrid(props) {
             setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
         } else {
             // otherwise, display who is available
-            setShowList(true)
-            setNamesAvailable(selectedInterval.namesAvailable)
-            setNamesUnavailable(selectedInterval.namesUnavailable)
-            setIntervalDatetime(selectedInterval.time)
+            if (props.availabilities.length > 0) {
+                setShowList(true)
+                setNamesAvailable(selectedInterval.namesAvailable)
+                setNamesUnavailable(selectedInterval.namesUnavailable)
+                setIntervalDatetime(selectedInterval.time)
+            }
         }
     }
 

@@ -13,9 +13,6 @@ function Page({
                   endTime: endTime,
                   availabilities: availabilities,
 }) {
-
-    console.log(JSON.parse(availabilities))
-
     return (
         <div className={styles.container}>
             <p className="signature">
@@ -64,7 +61,6 @@ export async function getServerSideProps(context) {
             db.destroy();
         })
 
-    console.log(availabilities)
     return {
         props: {
             id: scheduler[0]['id'],

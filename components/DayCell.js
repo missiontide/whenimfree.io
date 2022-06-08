@@ -23,7 +23,7 @@ function DayCell(props) {
 
     // intersecting availabilities background color
     let divStyle = {}
-    let namesAvailableCount = props.interval['namesAvailable'].length;
+    let namesAvailableCount = props.interval['namesAvailable'] !== undefined ? props.interval['namesAvailable'].length : 0;
     if (namesAvailableCount > 0) {
         let alpha = namesAvailableCount / props.maxAvailableCount;
         divStyle = {
