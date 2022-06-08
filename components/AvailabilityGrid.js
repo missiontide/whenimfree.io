@@ -19,6 +19,8 @@ function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
     const startTime = new Date(props.startTime);
     const endTime = new Date(props.endTime);
+    const intervalsGrid = props.intervalsGrid;
+    const setIntervalsGrid = props.setIntervalsGrid;
     const [maxAvailableCount, setMaxAvailableCount] = useState(0)
 
     // initializing intervals grid
@@ -78,7 +80,7 @@ function AvailabilityGrid(props) {
         })
         setMaxAvailableCount(max); // this is amount of names on interval(s) w/ most intersecting availabilities
 
-        props.setIntervalsGrid(newIntervalsGrid)
+        setIntervalsGrid(newIntervalsGrid)
     }, [])
 
 
@@ -90,7 +92,7 @@ function AvailabilityGrid(props) {
     MOUSE DOWN: set origin and whether user is selecting or removing
     */
     function handleMouseDown(selectedInterval) {
-        const newIntervalsGrid = props.intervalsGrid.slice();
+        const newIntervalsGrid = intervalsGrid.slice();
         const {colIdx, rowIdx} = selectedInterval
         const interval = newIntervalsGrid[colIdx][rowIdx]
 
@@ -106,7 +108,7 @@ function AvailabilityGrid(props) {
             rowIdx: rowIdx,
         })
         document.addEventListener("mouseup", handleMouseUp)
-        props.setIntervalsGrid(newIntervalsGrid)
+        setIntervalsGrid(newIntervalsGrid)
     }
 
     /*
@@ -115,6 +117,26 @@ function AvailabilityGrid(props) {
     const [toHere, setToHere] = useState({colIdx: undefined, rowIdx: undefined})
     useEffect(() => {
         if (toHere['colIdx'] === undefined) return;
+
+        function applyMouseOverHighlights() {
+            const newIntervalsGrid = intervalsGrid.slice();
+            // select or de-select all cols and rows between origin and this interval
+            for (let i = 0; i < intervalsGrid.length; i++) {
+                for (let j = 0; j < intervalsGrid[0].length; j++) {
+                    if (Math.min(toHere.colIdx, origin.colIdx) <= i // within the origin -> toHere selection
+                        && i <= Math.max(toHere.colIdx, origin.colIdx)
+                        && Math.min(toHere.rowIdx, origin.rowIdx) <= j
+                        && j <= Math.max(toHere.rowIdx, origin.rowIdx)
+                    ){
+                        if (selecting) newIntervalsGrid[i][j].mouseoverHighlightAction = "selecting";
+                        if (removing) newIntervalsGrid[i][j].mouseoverHighlightAction = "removing";
+                    } else {
+                        newIntervalsGrid[i][j].mouseoverHighlightAction = null;
+                    }
+                }
+            }
+            setIntervalsGrid(newIntervalsGrid)
+        }
 
         applyMouseOverHighlights()
     }, [toHere])
@@ -142,28 +164,6 @@ function AvailabilityGrid(props) {
         setShowList(false)
     }
 
-    function applyMouseOverHighlights() {
-        const newIntervalsGrid = props.intervalsGrid.slice();
-        // select or de-select all cols and rows between origin and this interval
-        for (let i = 0; i < props.intervalsGrid.length; i++) {
-            for (let j = 0; j < props.intervalsGrid[0].length; j++) {
-                if (Math.min(toHere.colIdx, origin.colIdx) <= i // within the origin -> toHere selection
-                        && i <= Math.max(toHere.colIdx, origin.colIdx)
-                        && Math.min(toHere.rowIdx, origin.rowIdx) <= j
-                        && j <= Math.max(toHere.rowIdx, origin.rowIdx)
-                ){
-                    if (selecting) newIntervalsGrid[i][j].mouseoverHighlightAction = "selecting";
-                    if (removing) newIntervalsGrid[i][j].mouseoverHighlightAction = "removing";
-                } else {
-                    newIntervalsGrid[i][j].mouseoverHighlightAction = null;
-                }
-
-            }
-        }
-
-        props.setIntervalsGrid(newIntervalsGrid)
-    }
-
     function handleMouseUp() {
         saveSelectionState();
 
@@ -177,7 +177,7 @@ function AvailabilityGrid(props) {
     // iterate through intervals and set selected based on mouseoverHighlightAction status
     // then sets all mouseoverHighlightAction to null
     function saveSelectionState() {
-        const newIntervalsGrid = props.intervalsGrid.slice();
+        const newIntervalsGrid = intervalsGrid.slice();
 
         let count = 0; // for setting somethingSelected
         for (let i = 0; i < newIntervalsGrid.length; i++) {
@@ -190,12 +190,12 @@ function AvailabilityGrid(props) {
             }
         }
         setSomethingSelected(count > 0)
-        props.setIntervalsGrid(newIntervalsGrid)
+        setIntervalsGrid(newIntervalsGrid)
     }
 
     const [somethingSelected, setSomethingSelected] = useState(false)
     function clearSelection() {
-        const newIntervalsGrid = props.intervalsGrid.slice();
+        const newIntervalsGrid = intervalsGrid.slice();
 
         for (let i = 0; i < newIntervalsGrid.length; i++) {
             for (let j = 0; j < newIntervalsGrid[0].length; j++) {
@@ -203,20 +203,20 @@ function AvailabilityGrid(props) {
             }
         }
 
-        props.setIntervalsGrid(newIntervalsGrid)
+        setIntervalsGrid(newIntervalsGrid)
         setSomethingSelected(false)
     }
 
     return (
         <>
             <div className="availabilityGrid">
-                {props.intervalsGrid.length > 0 &&
+                {intervalsGrid.length > 0 &&
                     <TimeColumn
-                        timeIntervals={props.intervalsGrid[0]}
+                        timeIntervals={intervalsGrid[0]}
                     />
                 }
 
-                {props.intervalsGrid.map((col, colIdx) => { return (
+                {intervalsGrid.map((col, colIdx) => { return (
                     <DayColumn
                         key={colIdx}
                         timeIntervals={col}
@@ -245,7 +245,7 @@ function AvailabilityGrid(props) {
             </div>
             <div className="caption">
                 <p>Click and drag to indicate your availability.<br/>
-                    Mouseover to see others' availability.
+                    Mouseover to see others&apos; availability.
                 </p>
             </div>
         </>
