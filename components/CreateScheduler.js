@@ -4,7 +4,8 @@ import EventNameInput from "./EventNameInput";
 import DayPickerCalendar from "./DayPickerCalendar"
 import TimeSelector from "./TimeSelector";
 import SubmitButton from "./SubmitButton";
-import AvailabilityGrid from "./AvailabilityGrid";
+
+import cuid from "cuid";
 import { parse } from "date-fns";
 
 function CreateScheduler() {
@@ -66,7 +67,7 @@ function CreateScheduler() {
 }
 
 function createUniqueURL() {
-    return "gthlkjijfiewjfe"
+    return cuid.slug();
 }
 
 export default CreateScheduler;
