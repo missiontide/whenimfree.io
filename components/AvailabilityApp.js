@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
 import NameInput from "./NameInput";
 import SubmitButton from "./SubmitButton";
@@ -41,6 +41,9 @@ function AvailabilityApp(props) {
             <header className="App-header">
                 whenimfree.io
             </header>
+            <h3>
+                {props.eventName}
+            </h3>
             <AvailabilityGrid
                 availabilities={props.availabilities}
                 intervalsGrid={intervalsGrid}

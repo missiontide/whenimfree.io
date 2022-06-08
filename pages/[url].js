@@ -18,6 +18,7 @@ function Page({
         <div className={styles.container}>
             <AvailabilityApp
                 scheduler_id={id}
+                eventName={eventName}
                 selectedDays={JSON.parse(days)}
                 startTime={startTime}
                 endTime={endTime}
