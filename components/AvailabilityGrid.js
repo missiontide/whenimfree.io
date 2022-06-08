@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
+import AvailabilityList from "./AvailabilityList";
 
 /*
 interval object {
@@ -117,13 +118,18 @@ function AvailabilityGrid(props) {
         applyMouseOverHighlights()
     }, [toHere])
 
+    const [namesAvailable, setNamesAvailable] = useState([])
+    const [namesUnavailable, setNamesUnavailable] = useState([])
+    const [intervalDatetime, setintervalDatetime] = useState([])
     function handleMouseOver(selectedInterval) {
         if (selecting || removing) {
             // if highlighting, handle highlights
             setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
         } else {
             // otherwise, display who is available
-
+            setNamesAvailable(selectedInterval.namesAvailable)
+            setNamesUnavailable(selectedInterval.namesUnavailable)
+            setintervalDatetime(selectedInterval.time)
         }
     }
 
@@ -193,6 +199,12 @@ function AvailabilityGrid(props) {
                     onMouseOver={handleMouseOver}
                 />
             )})}
+            <AvailabilityList
+                totalNames={props.availabilities.length}
+                intervalDatetime={intervalDatetime}
+                namesAvailable={namesAvailable}
+                namesUnavailable={namesUnavailable}
+            />
         </div>
     )
 }

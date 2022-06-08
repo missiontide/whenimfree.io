@@ -45,3 +45,8 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+/* Availability List */
+.availabilityList {
+    float:right;
+}
