@@ -1,6 +1,7 @@
+import "@fontsource/montserrat";
 import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/App.css';
+import '../styles/CreateScheduler.css';
 import '../styles/EventNameInput.css'
 import '../styles/Calendar.css'
 import '../styles/TimeSelector.css'

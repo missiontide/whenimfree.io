@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Badge } from "react-bootstrap";
 
 function EventNameInput(props) {
 
@@ -7,14 +8,19 @@ function EventNameInput(props) {
     }
 
     return (
-        <div className="inputDiv">
-            <input
-                value={props.eventName}
-                onChange={handleChange}
-                placeholder="event name..."
-                autoFocus
-            />
-        </div>
+        <>
+            <div className="badgeDiv">
+                {props.eventName === "" && <Badge bg="dark">1. Name your event</Badge>}
+            </div>
+            <div className="inputDiv">
+                <Form.Control
+                    value={props.eventName}
+                    onChange={handleChange}
+                    placeholder="Enter event name..."
+                    autoFocus
+                />
+            </div>
+        </>
     );
 }
 

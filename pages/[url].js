@@ -1,6 +1,8 @@
 import styles from '../styles/Home.module.css'
 import AvailabilityApp from "../components/AvailabilityApp";
 import dbConfig from "../db/knexfile";
+import logo from "../public/logo.png";
+import Image from "next/image";
 
 function Page({
                   id: id,
@@ -16,6 +18,10 @@ function Page({
 
     return (
         <div className={styles.container}>
+            <p className="signature">
+                made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
+            </p>
+            <Image src={logo} className="App-logo" alt="logo" />
             <AvailabilityApp
                 scheduler_id={id}
                 eventName={eventName}

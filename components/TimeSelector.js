@@ -1,16 +1,25 @@
-import React from "react";
-import { FormSelect, Row, Col, FloatingLabel } from "react-bootstrap";
+import { useState } from "react";
+import {FormSelect, Row, Col, FloatingLabel, Badge} from "react-bootstrap";
 
 function TimeSelector(props) {
+    const [selected, setSelected] = useState(false);
+
     return (
-        <div>
+        <div className="timeSelectorDiv">
+            <div className="badgeDiv">
+                {!selected && <Badge bg="dark">3. Choose timeframe</Badge>}
+            </div>
             <Row className="g-2">
                 <Col sm>
-                    <FloatingLabel controlId="floatingSelectGrid" label="From">
+                    <FloatingLabel className="floatingLabel left" controlId="floatingSelectGrid" label="From">
                         <FormSelect
+                            className="timeSelector left"
                             value={props.startTime}
-                            onChange={(e) => props.setStartTime(e.target.value)
-                        }>
+                            onChange={(e) => {
+                                setSelected(true);
+                                props.setStartTime(e.target.value);
+                            }}
+                        >
                             <option>12:00 AM</option>
                             <option>1:00 AM</option>
                             <option>2:00 AM</option>
@@ -41,8 +50,12 @@ function TimeSelector(props) {
                 <Col sm>
                     <FloatingLabel controlId="floatingSelectGrid" label="Until">
                         <FormSelect
+                            className="timeSelector right"
                             value={props.endTime}
-                            onChange={(e) => props.setEndTime(e.target.value)}
+                            onChange={(e) => {
+                                setSelected(true);
+                                props.setEndTime(e.target.value)
+                            }}
                         >
                             <option>1:00 AM</option>
                             <option>2:00 AM</option>

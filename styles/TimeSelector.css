@@ -1,0 +1,9 @@
+.timeSelector {
+    width: 200px;
+}
+.timeSelector.left {
+    float: right;
+}
+.floatingLabel.left {
+    float: right;
+}

@@ -9,7 +9,7 @@ import cuid from "cuid";
 import { parse } from "date-fns";
 
 function CreateScheduler() {
-    const [eventName, setEventName] = useState([]);
+    const [eventName, setEventName] = useState("");
     const [days, setDays] = useState([]);
     const [startTime, setStartTime] = useState("8:00 AM");
     const [endTime, setEndTime] = useState("5:00 PM");
@@ -40,9 +40,6 @@ function CreateScheduler() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                whenimfree.io
-            </header>
             <div>
                 <EventNameInput
                     eventName={eventName}

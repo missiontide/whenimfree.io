@@ -38,9 +38,6 @@ function AvailabilityApp(props) {
 
     return (
         <div className="App">
-            <header className="App-header">
-                whenimfree.io
-            </header>
             <h3>
                 {props.eventName}
             </h3>
