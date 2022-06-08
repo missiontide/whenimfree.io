@@ -8,7 +8,7 @@ module.exports = {
   development: {
       client: 'postgresql',
       connection: {
-          connectionString: "",
+          connectionString: process.env.DATABASE_URI,
           ssl: { rejectUnauthorized: false }
       },
       pool: {
