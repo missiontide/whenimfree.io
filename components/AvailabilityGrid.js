@@ -9,7 +9,7 @@ interval object {
     selected: bool
     coldIdx: index of day columns
     rowIdx: index of interval
-    liveHighlight: "selecting" || "removing" || null
+    mouseoverHighlightAction: "selecting" || "removing" || null
 }
  */
 
@@ -38,18 +38,66 @@ function AvailabilityGrid(props) {
             // add an interval for every 15 minutes from start time to end time
             while (!isEqual(startDatetime, endDatetime)) {
                 // each row is a time intervals in the day
-                newDayColumn.push({
+                let rowInterval = {
                     time: startDatetime.getTime(),
                     selected: false,
                     colIdx: colIdx,
                     rowIdx: rowIdx,
-                    liveHighlight: null,
-                })
-                startDatetime = add(startDatetime, {minutes: 15})
+                    namesAvailable: [],
+                    namesUnavailable: [],
+                    mouseoverHighlightAction: null, // used for determining whether to show as selected/unselected when highlighting
+                };
+                newDayColumn.push(rowInterval);
+                startDatetime = add(startDatetime, {minutes: 15}) // increment by 15 minutes
                 rowIdx++;
             }
 
             newIntervalsGrid.push(newDayColumn)
+        })
+
+        let availabilities = [
+            {
+                name:"fakePatrick",
+                selectedIntervals: [
+                    {
+                        time: new Date(),
+                        selected: true,
+                        colIdx: 2,
+                        rowIdx: 2,
+                    },
+                    {
+                        time: new Date(),
+                        selected: true,
+                        colIdx: 3,
+                        rowIdx: 4,
+                    }
+                ]
+            },
+            {
+                name:"billy",
+                selectedIntervals: [
+                    {
+                        time: new Date(),
+                        selected: true,
+                        colIdx: 0,
+                        rowIdx: 10,
+                    },
+                ]
+            }
+        ]
+
+        // add all the selected intervals by other users to respective col, row interval
+        props.availabilities.forEach((availability) => {
+            let name = availability.name;
+            availability.selectedIntervals.forEach((col, colIdx) => {
+                col.forEach((interval, rowIdx) => {
+                    if (interval.selected === true) {
+                        newIntervalsGrid[colIdx][rowIdx].namesAvailable.push(name)
+                    } else {
+                        newIntervalsGrid[colIdx][rowIdx].namesUnavailable.push(name)
+                    }
+                })
+            })
         })
 
         props.setIntervalsGrid(newIntervalsGrid)
@@ -95,7 +143,11 @@ function AvailabilityGrid(props) {
 
     function handleMouseOver(selectedInterval) {
         if (selecting || removing) {
+            // if highlighting, handle highlights
             setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
+        } else {
+            // otherwise, display who is available
+
         }
     }
 
@@ -109,10 +161,10 @@ function AvailabilityGrid(props) {
                         && Math.min(toHere.rowIdx, origin.rowIdx) <= j
                         && j <= Math.max(toHere.rowIdx, origin.rowIdx)
                 ){
-                    if (selecting) newIntervalsGrid[i][j].liveHighlight = "selecting";
-                    if (removing) newIntervalsGrid[i][j].liveHighlight = "removing";
+                    if (selecting) newIntervalsGrid[i][j].mouseoverHighlightAction = "selecting";
+                    if (removing) newIntervalsGrid[i][j].mouseoverHighlightAction = "removing";
                 } else {
-                    newIntervalsGrid[i][j].liveHighlight = null;
+                    newIntervalsGrid[i][j].mouseoverHighlightAction = null;
                 }
 
             }
@@ -131,17 +183,17 @@ function AvailabilityGrid(props) {
         document.removeEventListener("mouseup", handleMouseUp)
     }
 
-    // iterate through intervals and set selected based on liveHighlight status
-    // then sets all liveHighlight to null
+    // iterate through intervals and set selected based on mouseoverHighlightAction status
+    // then sets all mouseoverHighlightAction to null
     function saveSelectionState() {
         const newIntervalsGrid = props.intervalsGrid.slice();
 
         for (let i = 0; i < newIntervalsGrid.length; i++) {
             for (let j = 0; j < newIntervalsGrid[0].length; j++) {
                 let interval = newIntervalsGrid[i][j];
-                if (interval.liveHighlight === "selecting") interval.selected = true;
-                if (interval.liveHighlight === "removing") interval.selected = false;
-                interval.liveHighlight = null;
+                if (interval.mouseoverHighlightAction === "selecting") interval.selected = true;
+                if (interval.mouseoverHighlightAction === "removing") interval.selected = false;
+                interval.mouseoverHighlightAction = null;
             }
         }
 

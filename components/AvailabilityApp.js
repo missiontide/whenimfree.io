@@ -8,9 +8,6 @@ function AvailabilityApp(props) {
     const [name, setName] = useState([])
 
     function handleSubmit() {
-        console.log(name)
-        console.log(props.schedule_id)
-
         fetch('/api/insert-availability', {
             method: 'POST',
             headers: {
@@ -21,10 +18,11 @@ function AvailabilityApp(props) {
                 name: name,
                 selectedIntervals: JSON.stringify(intervalsGrid),
             })
-        }).then(
-            response => {
-                // window.location.reload();
-            }).catch((error) => {
+        }).then(response => {
+            if (response.status === 201) {
+                window.location.reload();
+            }
+        }).catch((error) => {
             console.error('Error: ', error)
         })
     }
@@ -35,6 +33,7 @@ function AvailabilityApp(props) {
                 whenimfree.io
             </header>
             <AvailabilityGrid
+                availabilities={props.availabilities}
                 intervalsGrid={intervalsGrid}
                 setIntervalsGrid={setIntervalsGrid}
                 selectedDays={props.selectedDays}

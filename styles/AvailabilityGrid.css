@@ -17,7 +17,7 @@
 }
 
 .dayCell.selected {
-    background: rgb(51, 153, 0);
+    background: rgb(51, 153, 0) !important;
 }
 
 /* border styling */

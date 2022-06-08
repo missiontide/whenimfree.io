@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         })
         .then(() => {
             // redirect to newly created url
-            return res.status(201)
+            return res.status(201).send()
         })
         .catch((err) => {
             return res.status(400).send(err)

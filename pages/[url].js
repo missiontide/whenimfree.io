@@ -9,12 +9,10 @@ function Page({
                   days: days,
                   startTime: startTime,
                   endTime: endTime,
+                  availabilities: availabilities,
 }) {
-    console.log(url)
-    console.log(eventName)
-    console.log(days)
-    console.log(new Date(startTime))
-    console.log(new Date(endTime))
+
+    console.log(JSON.parse(availabilities))
 
     return (
         <div className={styles.container}>
@@ -23,6 +21,7 @@ function Page({
                 selectedDays={JSON.parse(days)}
                 startTime={startTime}
                 endTime={endTime}
+                availabilities={JSON.parse(availabilities)}
             />
         </div>
     )
@@ -32,7 +31,7 @@ export async function getServerSideProps(context) {
     const { url } = context.query;
 
     const db = require('knex')(dbConfig['development'])
-    const data = await db('scheduler')
+    const scheduler = await db('scheduler')
         .select({
             id: 'id',
             url: 'url',
@@ -44,19 +43,30 @@ export async function getServerSideProps(context) {
         url: url,
     }).catch((err) => {
             console.log(err)
-    }).finally(() => {
-        db.destroy();
     })
 
-    console.log(data)
+    const availabilities = await db('availability')
+        .select({
+            name: 'name',
+            selectedIntervals: 'selectedIntervals',
+        }).where({
+            scheduler_id: scheduler[0]['id'],
+        }).catch((err) => {
+            console.log(err)
+        }).finally(() => {
+            db.destroy();
+        })
+
+    console.log(availabilities)
     return {
         props: {
-            id: data[0]['id'],
-            url: data[0]['url'],
-            eventName: data[0]['eventName'],
-            days: JSON.stringify(data[0]['days']),
-            startTime: data[0]['startTime'].toJSON(),
-            endTime: data[0]['endTime'].toJSON(),
+            id: scheduler[0]['id'],
+            url: scheduler[0]['url'],
+            eventName: scheduler[0]['eventName'],
+            days: JSON.stringify(scheduler[0]['days']),
+            startTime: scheduler[0]['startTime'].toJSON(),
+            endTime: scheduler[0]['endTime'].toJSON(),
+            availabilities: JSON.stringify(availabilities),
         }
     }
 }
