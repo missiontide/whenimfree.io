@@ -2,16 +2,9 @@
 
 import dbConfig from "../../db/knexfile";
 
-export default function handler(req, res) {
-
-
-    // res.status(200).json({
-    //     cookies: req.cookies,
-    //     query: req.query,
-    //     body: req.body,
-    // })
+export default async function handler(req, res) {
     const db = require('knex')(dbConfig['development'])
-    db('scheduler')
+    const data = await db('scheduler')
         .insert({
             url: req.body.url,
             eventName: req.body.eventName,
@@ -20,11 +13,11 @@ export default function handler(req, res) {
             endTime: req.body.endTime,
         })
         .then(() => {
-            res.redirect('/' + req.body.url)
+            // redirect to newly created url
+            return res.redirect('/' + req.body.url)
         })
         .catch((err) => {
-            res.status(400).send(err)
+            return res.status(400).send(err)
         })
         .finally(() => {db.destroy();})
-    // res.status(200).json({ name: 'CREATING' })
 }

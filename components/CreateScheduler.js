@@ -28,9 +28,10 @@ function CreateScheduler() {
                 endTime: parse(endTime, "p", new Date()),
             })
         }).then(
-            response => response.json()
-        ).then(data => {
-            console.log(data)
+            response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
         }).catch((error) => {
             console.error('Error: ', error)
         })
@@ -65,7 +66,7 @@ function CreateScheduler() {
 }
 
 function createUniqueURL() {
-    return "gthlkji"
+    return "gthlkjijfiewjfe"
 }
 
 export default CreateScheduler;
