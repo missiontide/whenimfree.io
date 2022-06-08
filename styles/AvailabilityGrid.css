@@ -48,5 +48,7 @@
 
 /* Availability List */
 .availabilityList {
-    float:right;
+    position: absolute;
+    right: 10px;
+    top: 15px;
 }

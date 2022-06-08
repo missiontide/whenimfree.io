@@ -19,6 +19,7 @@ function DayColumn(props) {
                     maxAvailableCount={props.maxAvailableCount}
                     onMouseDown={props.onMouseDown}
                     onMouseOver={props.onMouseOver}
+                    onMouseOut={props.onMouseOut}
                 />
             )})}
         </div>

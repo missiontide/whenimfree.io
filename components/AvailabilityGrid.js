@@ -118,19 +118,25 @@ function AvailabilityGrid(props) {
         applyMouseOverHighlights()
     }, [toHere])
 
+    const [showList, setShowList] = useState(false)
     const [namesAvailable, setNamesAvailable] = useState([])
     const [namesUnavailable, setNamesUnavailable] = useState([])
-    const [intervalDatetime, setintervalDatetime] = useState([])
+    const [intervalDatetime, setIntervalDatetime] = useState()
     function handleMouseOver(selectedInterval) {
         if (selecting || removing) {
             // if highlighting, handle highlights
             setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
         } else {
             // otherwise, display who is available
+            setShowList(true)
             setNamesAvailable(selectedInterval.namesAvailable)
             setNamesUnavailable(selectedInterval.namesUnavailable)
-            setintervalDatetime(selectedInterval.time)
+            setIntervalDatetime(selectedInterval.time)
         }
+    }
+
+    function handleMouseOut() {
+        setShowList(false)
     }
 
     function applyMouseOverHighlights() {
@@ -197,14 +203,17 @@ function AvailabilityGrid(props) {
                     maxAvailableCount={maxAvailableCount}
                     onMouseDown={handleMouseDown}
                     onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
                 />
             )})}
-            <AvailabilityList
-                totalNames={props.availabilities.length}
-                intervalDatetime={intervalDatetime}
-                namesAvailable={namesAvailable}
-                namesUnavailable={namesUnavailable}
-            />
+            {true &&
+                <AvailabilityList
+                    totalNames={props.availabilities.length}
+                    intervalDatetime={intervalDatetime}
+                    namesAvailable={namesAvailable}
+                    namesUnavailable={namesUnavailable}
+                />
+            }
         </div>
     )
 }

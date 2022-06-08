@@ -15,7 +15,7 @@ function AvailabilityList(props) {
 
     return (
         <div className="availabilityList">
-            <h4>{props.namesAvailable.length}/{props.totalNames}</h4>
+            <h4>{props.namesAvailable.length}/{props.totalNames} available</h4>
             <h5>{format(props.intervalDatetime, "EEE, MMM d yyyy, h:mmaaa")}</h5>
             <table>
                 <thead>

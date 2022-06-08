@@ -37,6 +37,7 @@ function DayCell(props) {
             className={`dayCell ${className}`}
             onMouseDown={() => props.onMouseDown(props.interval)}
             onMouseOver={() => props.onMouseOver(props.interval)}
+            onMouseOut={() => props.onMouseOut()}
         >
         </div>
     );
