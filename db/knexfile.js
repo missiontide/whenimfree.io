@@ -8,7 +8,7 @@ module.exports = {
   development: {
       client: 'postgresql',
       connection: {
-          connectionString: process.env.DATABASE_URI,
+          connectionString: "",
           ssl: { rejectUnauthorized: false }
       },
       pool: {
@@ -18,7 +18,6 @@ module.exports = {
       migrations: {
           tableName: 'knex_migrations'
       },
-    useNullAsDefault: true
   },
 
   staging: {

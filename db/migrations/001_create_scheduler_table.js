@@ -8,9 +8,9 @@ exports.up = function(knex) {
           table.increments('id');
           table.string('url', 255).notNullable();
           table.string('eventName', 255).notNullable();
-          table.specificType('days', 'date[]').notNullable();
-          table.datetime('startTime').notNullable();
-          table.datetime('endTime').notNullable();
+          table.specificType('days', 'timestamp without time zone[]');
+          table.datetime('startTime');
+          table.datetime('endTime');
       })
 };
 

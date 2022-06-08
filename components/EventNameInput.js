@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-function EventNameInput() {
-    const [value, setValue] = useState("");
+function EventNameInput(props) {
 
     function handleChange(e) {
-        setValue(e.target.value);
+        props.setEventName(e.target.value);
     }
 
     return (
         <div className="inputDiv">
             <input
-                value={value}
+                value={props.eventName}
                 onChange={handleChange}
                 placeholder="event name..."
                 autoFocus

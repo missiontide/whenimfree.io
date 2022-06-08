@@ -7,7 +7,7 @@ exports.up = function(knex) {
         .createTable('availability', function (table) {
             table.increments('id');
             table.integer('scheduler_id').unsigned()
-            table.foreign('scheduler_id').references('scheduler.id').notNullable();
+            table.foreign('scheduler_id').references('scheduler.id');
             table.string('name', 255).notNullable();
             table.specificType('selectedIntervals', 'timestamp with time zone[]').notNullable();
         })
