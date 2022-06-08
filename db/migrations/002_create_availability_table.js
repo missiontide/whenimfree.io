@@ -8,8 +8,8 @@ exports.up = function(knex) {
             table.increments('id');
             table.integer('scheduler_id').unsigned()
             table.foreign('scheduler_id').references('scheduler.id');
-            table.string('name', 255).notNullable();
-            table.specificType('selectedIntervals', 'timestamp with time zone[]').notNullable();
+            table.string('name', 255);
+            table.specificType('selectedIntervals', 'json');
         })
 };
 

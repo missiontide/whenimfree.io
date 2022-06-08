@@ -1,8 +1,9 @@
 import styles from '../styles/Home.module.css'
-import AvailabilityGrid from "../components/AvailabilityGrid";
+import AvailabilityApp from "../components/AvailabilityApp";
 import dbConfig from "../db/knexfile";
 
 function Page({
+                  id: id,
                   url: url,
                   eventName: eventName,
                   days: days,
@@ -17,7 +18,8 @@ function Page({
 
     return (
         <div className={styles.container}>
-            <AvailabilityGrid
+            <AvailabilityApp
+                scheduler_id={id}
                 selectedDays={JSON.parse(days)}
                 startTime={startTime}
                 endTime={endTime}
@@ -49,6 +51,7 @@ export async function getServerSideProps(context) {
     console.log(data)
     return {
         props: {
+            id: data[0]['id'],
             url: data[0]['url'],
             eventName: data[0]['eventName'],
             days: JSON.stringify(data[0]['days']),

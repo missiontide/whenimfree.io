@@ -59,6 +59,7 @@ function CreateScheduler() {
                     setEndTime={setEndTime}
                 />
                 <SubmitButton
+                    text="Create Scheduler"
                     onClick={handleSubmit}
                 />
             </div>

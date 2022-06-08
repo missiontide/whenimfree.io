@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import { add, isEqual } from 'date-fns';
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
@@ -17,7 +17,6 @@ function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
     const startTime = new Date(props.startTime);
     const endTime = new Date(props.endTime);
-    const [intervalsGrid, setIntervalsGrid] = useState([])
 
     // initializing intervals grid
     useEffect(() => {
@@ -53,8 +52,8 @@ function AvailabilityGrid(props) {
             newIntervalsGrid.push(newDayColumn)
         })
 
-        setIntervalsGrid(newIntervalsGrid)
-    }, [selectedDays])
+        props.setIntervalsGrid(newIntervalsGrid)
+    }, [])
 
 
     const [selecting, setSelecting] = useState(false)
@@ -65,7 +64,7 @@ function AvailabilityGrid(props) {
     MOUSE DOWN: set origin and whether user is selecting or removing
     */
     function handleMouseDown(selectedInterval) {
-        const newIntervalsGrid = intervalsGrid.slice();
+        const newIntervalsGrid = props.intervalsGrid.slice();
         const {colIdx, rowIdx} = selectedInterval
         const interval = newIntervalsGrid[colIdx][rowIdx]
 
@@ -81,7 +80,7 @@ function AvailabilityGrid(props) {
             rowIdx: rowIdx,
         })
         document.addEventListener("mouseup", handleMouseUp)
-        setIntervalsGrid(newIntervalsGrid)
+        props.setIntervalsGrid(newIntervalsGrid)
     }
 
     /*
@@ -101,10 +100,10 @@ function AvailabilityGrid(props) {
     }
 
     function applyMouseOverHighlights() {
-        const newIntervalsGrid = intervalsGrid.slice();
+        const newIntervalsGrid = props.intervalsGrid.slice();
         // select or de-select all cols and rows between origin and this interval
-        for (let i = 0; i < intervalsGrid.length; i++) {
-            for (let j = 0; j < intervalsGrid[0].length; j++) {
+        for (let i = 0; i < props.intervalsGrid.length; i++) {
+            for (let j = 0; j < props.intervalsGrid[0].length; j++) {
                 if (Math.min(toHere.colIdx, origin.colIdx) <= i // within the origin -> toHere selection
                         && i <= Math.max(toHere.colIdx, origin.colIdx)
                         && Math.min(toHere.rowIdx, origin.rowIdx) <= j
@@ -119,7 +118,7 @@ function AvailabilityGrid(props) {
             }
         }
 
-        setIntervalsGrid(newIntervalsGrid)
+        props.setIntervalsGrid(newIntervalsGrid)
     }
 
     function handleMouseUp() {
@@ -135,7 +134,7 @@ function AvailabilityGrid(props) {
     // iterate through intervals and set selected based on liveHighlight status
     // then sets all liveHighlight to null
     function saveSelectionState() {
-        const newIntervalsGrid = intervalsGrid.slice();
+        const newIntervalsGrid = props.intervalsGrid.slice();
 
         for (let i = 0; i < newIntervalsGrid.length; i++) {
             for (let j = 0; j < newIntervalsGrid[0].length; j++) {
@@ -146,18 +145,18 @@ function AvailabilityGrid(props) {
             }
         }
 
-        setIntervalsGrid(newIntervalsGrid)
+        props.setIntervalsGrid(newIntervalsGrid)
     }
 
     return (
         <div className="availabilityGrid">
-            {intervalsGrid.length > 0 &&
+            {props.intervalsGrid.length > 0 &&
                 <TimeColumn
-                    timeIntervals={intervalsGrid[0]}
+                    timeIntervals={props.intervalsGrid[0]}
                 />
             }
 
-            {intervalsGrid.map((col, colIdx) => { return (
+            {props.intervalsGrid.map((col, colIdx) => { return (
                 <DayColumn
                     key={colIdx}
                     timeIntervals={col}
