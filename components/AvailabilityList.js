@@ -1,3 +1,4 @@
+import { Table } from "react-bootstrap"
 import {format} from "date-fns";
 
 function AvailabilityList(props) {
@@ -17,7 +18,7 @@ function AvailabilityList(props) {
         <div className="availabilityList">
             <h4>{props.namesAvailable.length}/{props.totalNames} available</h4>
             <h5>{format(props.intervalDatetime, "EEE, MMM d yyyy, h:mmaaa")}</h5>
-            <table>
+            <Table>
                 <thead>
                     <tr>
                         <th>Available</th>
@@ -34,7 +35,7 @@ function AvailabilityList(props) {
                     )
                 })}
                 </tbody>
-            </table>
+            </Table>
         </div>
     );
 }

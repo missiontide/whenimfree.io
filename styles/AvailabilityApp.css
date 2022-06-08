@@ -1,0 +1,13 @@
+.nameInputDiv {
+    margin: 30px auto 0;
+    max-width: 300px;
+}
+
+.nameInputDiv input {
+    height: 48px;
+    font-size: 18px;
+}
+
+.clearBadge {
+    cursor: pointer;
+}

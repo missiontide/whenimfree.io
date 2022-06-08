@@ -233,12 +233,19 @@ function AvailabilityGrid(props) {
                     />
                 }
             </div>
-            {somethingSelected &&
-                <ClearButton
-                    text="Clear Selection"
-                    onClick={clearSelection}
-                />
-            }
+            <div className="badgeDiv">
+                {somethingSelected &&
+                    <ClearButton
+                        text="Clear Selection"
+                        onClick={clearSelection}
+                    />
+                }
+            </div>
+            <div className="caption">
+                <p>Click and drag to indicate your availability.<br/>
+                    Mouseover to see others' availability.
+                </p>
+            </div>
         </>
     )
 }

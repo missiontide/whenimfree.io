@@ -1,3 +1,10 @@
+.availabilityGrid { margin-top: 30px; }
+.caption {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* TIME and DAY COLUMNS*/
 .timeColumn { display: inline-grid; text-align: right }
 .timeColumn .spacer { margin-bottom: 15px;}
 .timeColumn .timeCell { font-size: 10px; height: 9px; }
@@ -49,6 +56,6 @@
 /* Availability List */
 .availabilityList {
     position: absolute;
-    right: 10px;
-    top: 15px;
+    left: 30px;
+    top: 90px;
 }

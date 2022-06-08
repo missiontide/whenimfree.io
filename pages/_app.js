@@ -5,6 +5,7 @@ import '../styles/CreateScheduler.css';
 import '../styles/EventNameInput.css'
 import '../styles/Calendar.css'
 import '../styles/TimeSelector.css'
+import '../styles/AvailabilityApp.css'
 import '../styles/AvailabilityGrid.css'
 
 function MyApp({ Component, pageProps }) {

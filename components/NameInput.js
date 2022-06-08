@@ -1,4 +1,5 @@
 import React from "react";
+import { Form } from "react-bootstrap";
 
 function Name(props) {
 
@@ -7,8 +8,8 @@ function Name(props) {
     }
 
     return (
-        <div className="inputDiv">
-            <input
+        <div className="nameInputDiv">
+            <Form.Control
                 value={props.eventName}
                 onChange={handleChange}
                 placeholder="enter your name..."

@@ -39,7 +39,7 @@ function AvailabilityApp(props) {
     return (
         <div className="App">
             <h3>
-                {props.eventName}
+                <b>{props.eventName}</b>
             </h3>
             <AvailabilityGrid
                 availabilities={props.availabilities}
