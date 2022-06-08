@@ -6,6 +6,8 @@ function DayCell(props) {
     if (props.rowIdx % 4 === 0) className = "hour"
     else if ((props.rowIdx - 2) % 4 === 0) className = "thirty"
 
+    // showing selected
+    // and handling highlighting
     switch (props.interval['mouseoverHighlightAction']) {
         case "selecting":
             className += " selected"
@@ -19,17 +21,15 @@ function DayCell(props) {
             break;
     }
 
+    // intersecting availabilities background color
     let divStyle = {}
     let namesAvailableCount = props.interval['namesAvailable'].length;
     if (namesAvailableCount > 0) {
-        let totalNames = namesAvailableCount + props.interval['namesUnavailable'].length;
-        let alpha = namesAvailableCount / totalNames;
-
+        let alpha = namesAvailableCount / props.maxAvailableCount;
         divStyle = {
             background: `rgba(18, 18, 253, ${alpha})`
         }
     }
-
 
     return (
         <div

@@ -16,6 +16,7 @@ function DayColumn(props) {
                     key={rowIdx}
                     rowIdx={rowIdx}
                     interval={interval}
+                    maxAvailableCount={props.maxAvailableCount}
                     onMouseDown={props.onMouseDown}
                     onMouseOver={props.onMouseOver}
                 />

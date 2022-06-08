@@ -17,6 +17,7 @@ function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
     const startTime = new Date(props.startTime);
     const endTime = new Date(props.endTime);
+    const [maxAvailableCount, setMaxAvailableCount] = useState(0)
 
     // initializing intervals grid
     useEffect(() => {
@@ -55,6 +56,7 @@ function AvailabilityGrid(props) {
             newIntervalsGrid.push(newDayColumn)
         })
 
+        let max = 0;
         // Add loaded availabilities
         // add all the selected intervals by other users to respective col, row interval
         props.availabilities.forEach((availability) => {
@@ -63,12 +65,16 @@ function AvailabilityGrid(props) {
                 col.forEach((interval, rowIdx) => {
                     if (interval.selected === true) {
                         newIntervalsGrid[colIdx][rowIdx].namesAvailable.push(name)
+                        if (newIntervalsGrid[colIdx][rowIdx].namesAvailable.length > max) {
+                            max = newIntervalsGrid[colIdx][rowIdx].namesAvailable.length
+                        }
                     } else {
                         newIntervalsGrid[colIdx][rowIdx].namesUnavailable.push(name)
                     }
                 })
             })
         })
+        setMaxAvailableCount(max); // this is amount of names on interval(s) w/ most intersecting availabilities
 
         props.setIntervalsGrid(newIntervalsGrid)
     }, [])
@@ -182,6 +188,7 @@ function AvailabilityGrid(props) {
                 <DayColumn
                     key={colIdx}
                     timeIntervals={col}
+                    maxAvailableCount={maxAvailableCount}
                     onMouseDown={handleMouseDown}
                     onMouseOver={handleMouseOver}
                 />
