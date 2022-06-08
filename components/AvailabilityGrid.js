@@ -55,37 +55,7 @@ function AvailabilityGrid(props) {
             newIntervalsGrid.push(newDayColumn)
         })
 
-        let availabilities = [
-            {
-                name:"fakePatrick",
-                selectedIntervals: [
-                    {
-                        time: new Date(),
-                        selected: true,
-                        colIdx: 2,
-                        rowIdx: 2,
-                    },
-                    {
-                        time: new Date(),
-                        selected: true,
-                        colIdx: 3,
-                        rowIdx: 4,
-                    }
-                ]
-            },
-            {
-                name:"billy",
-                selectedIntervals: [
-                    {
-                        time: new Date(),
-                        selected: true,
-                        colIdx: 0,
-                        rowIdx: 10,
-                    },
-                ]
-            }
-        ]
-
+        // Add loaded availabilities
         // add all the selected intervals by other users to respective col, row interval
         props.availabilities.forEach((availability) => {
             let name = availability.name;

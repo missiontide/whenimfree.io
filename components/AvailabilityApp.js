@@ -8,6 +8,15 @@ function AvailabilityApp(props) {
     const [name, setName] = useState([])
 
     function handleSubmit() {
+        let simplifiedIntervalsGrid = intervalsGrid.slice()
+        simplifiedIntervalsGrid.forEach((col) => {
+            col.forEach((interval) => {
+                delete interval.namesAvailable;
+                delete interval.namesUnavailable;
+                delete interval.mouseoverHighlightAction;
+            })
+        })
+
         fetch('/api/insert-availability', {
             method: 'POST',
             headers: {
@@ -16,7 +25,7 @@ function AvailabilityApp(props) {
             body: JSON.stringify({
                 scheduler_id: props.scheduler_id,
                 name: name,
-                selectedIntervals: JSON.stringify(intervalsGrid),
+                selectedIntervals: JSON.stringify(simplifiedIntervalsGrid),
             })
         }).then(response => {
             if (response.status === 201) {
