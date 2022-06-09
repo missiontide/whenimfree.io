@@ -3,6 +3,7 @@ import AvailabilityApp from "../components/AvailabilityApp";
 import dbConfig from "../db/knexfile";
 import logo from "../public/logo.png";
 import Image from "next/image";
+import Link from 'next/link'
 
 function Page({
                   id: id,
@@ -19,9 +20,9 @@ function Page({
                 made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
             </p>
             <p>
-                <a href="/">
-                    <Image src={logo} className="App-logo" alt="logo" />
-                </a>
+                <Link href="/">
+                    <a><Image src={logo} className="App-logo" alt="logo" /></a>
+                </Link>
             </p>
             <AvailabilityApp
                 scheduler_id={id}
