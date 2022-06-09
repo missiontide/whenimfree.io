@@ -40,7 +40,7 @@ function TimeSelector(props) {
                             <option>9:00 AM</option>
                             <option>10:00 AM</option>
                             <option>11:00 AM</option>
-                            <option>12:00 AM</option>
+                            <option>12:00 PM</option>
                             <option>1:00 PM</option>
                             <option>2:00 PM</option>
                             <option>3:00 PM</option>
@@ -76,7 +76,7 @@ function TimeSelector(props) {
                             <option>9:00 AM</option>
                             <option>10:00 AM</option>
                             <option>11:00 AM</option>
-                            <option>12:00 AM</option>
+                            <option>12:00 PM</option>
                             <option>1:00 PM</option>
                             <option>2:00 PM</option>
                             <option>3:00 PM</option>

@@ -8,12 +8,12 @@ import { ProgressBar, Toast, ToastContainer } from "react-bootstrap";
 
 import cuid from "cuid";
 import { parse } from "date-fns";
+import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz"
 
 function CreateScheduler() {
     const [eventName, setEventName] = useState("");
     const [days, setDays] = useState([]);
-    const [selectedTimezone, setSelectedTimezone] = useState({})
-    useEffect(() => {setSelectedTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)}, [])
+    const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
     const [startTime, setStartTime] = useState("8:00 AM");
     const [endTime, setEndTime] = useState("5:00 PM");
     const [loading, setLoading] = useState(false);
@@ -32,8 +32,8 @@ function CreateScheduler() {
                 url: createUniqueURL(),
                 eventName: eventName,
                 days: days,
-                startTime: parse(startTime, "p", new Date()),
-                endTime: parse(endTime, "p", new Date()),
+                startTime: zonedTimeToUtc(parse(startTime, "p", new Date()), selectedTimezone.value),
+                endTime: zonedTimeToUtc(parse(endTime, "p", new Date()), selectedTimezone.value),
             })
         }).then(
             response => {
