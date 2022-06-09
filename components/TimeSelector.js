@@ -1,4 +1,6 @@
 import { useState } from "react";
+import dynamic from "next/dynamic"
+const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
 import {FormSelect, Row, Col, FloatingLabel, Badge} from "react-bootstrap";
 
 function TimeSelector(props) {
@@ -8,6 +10,12 @@ function TimeSelector(props) {
         <div className="timeSelectorDiv">
             <div className="badgeDiv">
                  <Badge bg={!selected ? "dark" : "secondary"}>3. Choose timeframe</Badge>
+            </div>
+            <div className="timezoneDiv">
+                <TimezoneSelect
+                    value={props.selectedTimezone}
+                    onChange={props.setSelectedTimezone}
+                />
             </div>
             <Row className="g-2">
                 <Col sm>

@@ -7,3 +7,12 @@
 .floatingLabel.left {
     float: right;
 }
+.timezoneDiv {
+    max-width: 408px;
+    margin: 0 auto;
+    font-size: 12px;
+    text-align: left;
+}
+#react-select-3-listbox div div {
+    padding: 5px 5px !important;
+}

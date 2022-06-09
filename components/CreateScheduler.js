@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import EventNameInput from "./EventNameInput";
 import DayPickerCalendar from "./DayPickerCalendar"
@@ -12,6 +12,8 @@ import { parse } from "date-fns";
 function CreateScheduler() {
     const [eventName, setEventName] = useState("");
     const [days, setDays] = useState([]);
+    const [selectedTimezone, setSelectedTimezone] = useState({})
+    useEffect(() => {setSelectedTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)}, [])
     const [startTime, setStartTime] = useState("8:00 AM");
     const [endTime, setEndTime] = useState("5:00 PM");
     const [loading, setLoading] = useState(false);
@@ -112,6 +114,8 @@ function CreateScheduler() {
                     setDays={setDays}
                 />
                 <TimeSelector
+                    selectedTimezone={selectedTimezone}
+                    setSelectedTimezone={setSelectedTimezone}
                     startTime={startTime}
                     setStartTime={setStartTime}
                     endTime={endTime}
