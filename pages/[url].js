@@ -18,7 +18,11 @@ function Page({
             <p className="signature">
                 made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
             </p>
-            <Image src={logo} className="App-logo" alt="logo" />
+            <p>
+                <a href="/">
+                    <Image src={logo} className="App-logo" alt="logo" />
+                </a>
+            </p>
             <AvailabilityApp
                 scheduler_id={id}
                 eventName={eventName}
