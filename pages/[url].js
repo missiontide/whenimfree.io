@@ -4,6 +4,7 @@ import dbConfig from "../db/knexfile";
 import logo from "../public/logo.png";
 import Image from "next/image";
 import Link from 'next/link'
+import FourOhFour from "./404"
 
 function Page({
                   id: id,
@@ -14,6 +15,8 @@ function Page({
                   endTime: endTime,
                   availabilities: availabilities,
 }) {
+    if (id === "error") { return FourOhFour(); }
+
     return (
         <div className={styles.container}>
             <p className="signature">
@@ -53,6 +56,11 @@ export async function getServerSideProps(context) {
     }).catch((err) => {
             console.log(err)
     })
+
+    // invalid URL given
+    if (scheduler === undefined) {
+        return { props: { id: "error"} }
+    }
 
     const availabilities = await db('availability')
         .select({
