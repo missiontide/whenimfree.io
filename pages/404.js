@@ -16,7 +16,7 @@ export default function FourOhFour() {
                 </Link>
             </p>
             <div className="App">
-                <h3>This event doesn't exist!</h3>
+                <h3>This event doesn&apos;t exist!</h3>
                 <p>Double-check your link or...</p>
                 <Link href="/">
                     <a>
