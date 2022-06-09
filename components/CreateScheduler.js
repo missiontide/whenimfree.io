@@ -16,9 +16,37 @@ function CreateScheduler() {
     const [endTime, setEndTime] = useState("5:00 PM");
     const [loading, setLoading] = useState(false);
 
+    // create the scheduler and redirect user to the Availability Page
+    function handleSubmit() {
+        if (validateInputs() > 0) { return } // if there are any errors, do not continue
+
+        setLoading(true);
+        fetch('/api/create-scheduler', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                url: createUniqueURL(),
+                eventName: eventName,
+                days: days,
+                startTime: parse(startTime, "p", new Date()),
+                endTime: parse(endTime, "p", new Date()),
+            })
+        }).then(
+            response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+        }).catch((error) => {
+            console.error('Error: ', error)
+            setLoading(false);
+        })
+    }
+
     /*
     ERROR HANDLING
-     */
+    */
     const [errors, setErrors] = useState([])
     function validateInputs() {
         const newErrors = []
@@ -48,34 +76,6 @@ function CreateScheduler() {
         const newErrors = errors.slice();
         newErrors.splice(newErrors.findIndex(jsx => jsx === errorJsx), 1)
         setErrors(newErrors)
-    }
-
-    // create the scheduler and redirect user to the Availability Page
-    function handleSubmit() {
-        if (validateInputs() > 0) { return } // if there are any errors, do not continue
-
-        setLoading(true);
-        fetch('/api/create-scheduler', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                url: createUniqueURL(),
-                eventName: eventName,
-                days: days,
-                startTime: parse(startTime, "p", new Date()),
-                endTime: parse(endTime, "p", new Date()),
-            })
-        }).then(
-            response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                }
-        }).catch((error) => {
-            console.error('Error: ', error)
-            setLoading(false);
-        })
     }
 
     return (

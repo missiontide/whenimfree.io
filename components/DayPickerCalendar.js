@@ -10,11 +10,12 @@ function DayPickerCalendar(props) {
         props.days && props.days.length > 0 ? (
             <p><b>{props.days.length} day{props.days.length > 1 && "s"} selected.</b></p>
         ) : (
-            <p><Badge bg="dark">2. Select one or more days</Badge></p>
+            <p style={{'height': '25.5px'}}></p>
         );
 
     return (
         <div className="dayPicker">
+            <Badge bg={props.days && props.days.length > 0 ? "secondary" : "dark"}>2. Select day(s)</Badge>
             <DayPicker
                 showOutsideDays
                 mode="multiple"

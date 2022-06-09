@@ -7,7 +7,7 @@ function TimeSelector(props) {
     return (
         <div className="timeSelectorDiv">
             <div className="badgeDiv">
-                {!selected && <Badge bg="dark">3. Choose timeframe</Badge>}
+                 <Badge bg={!selected ? "dark" : "secondary"}>3. Choose timeframe</Badge>
             </div>
             <Row className="g-2">
                 <Col sm>

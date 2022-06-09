@@ -10,7 +10,7 @@ function EventNameInput(props) {
     return (
         <>
             <div className="badgeDiv">
-                {props.eventName === "" && <Badge bg="dark">1. Name your event</Badge>}
+                <Badge bg={props.eventName === "" ? "dark" : "secondary"}>1. Name your event</Badge>
             </div>
             <div className="inputDiv">
                 <Form.Control
