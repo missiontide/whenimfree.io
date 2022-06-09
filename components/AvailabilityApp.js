@@ -2,14 +2,55 @@ import {useState} from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
 import NameInput from "./NameInput";
 import SubmitButton from "./SubmitButton";
-import { ProgressBar } from "react-bootstrap";
+import {ProgressBar, Toast, ToastContainer} from "react-bootstrap";
 
 function AvailabilityApp(props) {
     const [intervalsGrid, setIntervalsGrid] = useState([])
-    const [name, setName] = useState([])
+    const [name, setName] = useState("")
     const [loading, setLoading] = useState(false);
 
+    /*
+    ERROR HANDLING
+    */
+    const [errors, setErrors] = useState([])
+    function validateInputs() {
+        const newErrors = []
+
+        if (name === "") {
+            newErrors.push(<><b>Name</b> cannot be blank</>)
+        }
+        if (name.length > 255) {
+            newErrors.push(<><b>Name</b> cannot be more than 255 characters</>)
+        }
+        if (noIntervalSelected()) {
+            newErrors.push(<>Must highlight <b>at least one timeslot</b>.</>)
+        }
+
+        setErrors(newErrors)
+
+        return newErrors.length;
+    }
+
+    function noIntervalSelected() {
+        for (let i = 0; i < intervalsGrid.length; i++) {
+            for (let j = 0; j < intervalsGrid[0].length; j++) {
+                if (intervalsGrid[i][j].selected === true){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    function removeError(errorJsx) {
+        const newErrors = errors.slice();
+        newErrors.splice(newErrors.findIndex(jsx => jsx === errorJsx), 1)
+        setErrors(newErrors)
+    }
+
     function handleSubmit() {
+        if (validateInputs() > 0) { return }
 
         let simplifiedIntervalsGrid = intervalsGrid.slice()
         simplifiedIntervalsGrid.forEach((col) => {
@@ -19,6 +60,7 @@ function AvailabilityApp(props) {
                 delete interval.mouseoverHighlightAction;
             })
         })
+
         setLoading(true);
         fetch('/api/insert-availability', {
             method: 'POST',
@@ -50,6 +92,19 @@ function AvailabilityApp(props) {
                     </div>
                 </div>
             )}
+            <ToastContainer position="top-end" className="p-3">
+                {errors.map((errorJsx, idx) => {
+                    return (
+                        <Toast onClose={() => removeError(errorJsx)} key={idx}>
+                            <Toast.Header>
+                                <img className="rounded me-2" alt="" />
+                                <strong className="me-auto">Error</strong>
+                            </Toast.Header>
+                            <Toast.Body>{errorJsx}</Toast.Body>
+                        </Toast>
+                    )
+                })}
+            </ToastContainer>
             <h3>
                 <b>{props.eventName}</b>
             </h3>

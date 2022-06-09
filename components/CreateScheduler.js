@@ -26,7 +26,7 @@ function CreateScheduler() {
             newErrors.push(<><b>Event name</b> cannot be blank</>)
         }
         if (eventName.length > 255) {
-            newErrors.push(<><b>Event name</b> be more than 255 characters</>)
+            newErrors.push(<><b>Event name</b> cannot be more than 255 characters</>)
         }
         if (days.length === 0) {
             newErrors.push(<>Select at least <b>1 day</b></>)

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "knex migrate:latest --knexfile db/knexfile.js",
-    "deploy": "git checkout production && git fetch origin && git merge origin/main && git push"
+    "deploy": "git checkout production && git fetch origin && git merge origin/main && git push && git checkout main"
   },
   "dependencies": {
     "@fontsource/montserrat": "^4.5.11",
