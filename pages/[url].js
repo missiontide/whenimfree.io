@@ -58,7 +58,8 @@ export async function getServerSideProps(context) {
     })
 
     // invalid URL given
-    if (scheduler === undefined) {
+    if (scheduler.length === 0) {
+        db.destroy();
         return { props: { id: "error"} }
     }
 
