@@ -1,5 +1,7 @@
-import {useState} from "react";
+import { useState } from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
+import dynamic from "next/dynamic"
+const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
 import NameInput from "./NameInput";
 import SubmitButton from "./SubmitButton";
 import {ProgressBar, Toast, ToastContainer} from "react-bootstrap";
@@ -8,6 +10,7 @@ function AvailabilityApp(props) {
     const [intervalsGrid, setIntervalsGrid] = useState([])
     const [name, setName] = useState("")
     const [loading, setLoading] = useState(false);
+    const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
     /*
     ERROR HANDLING
@@ -105,6 +108,12 @@ function AvailabilityApp(props) {
                     )
                 })}
             </ToastContainer>
+            <div className="availabilityTimezoneDiv">
+                <TimezoneSelect
+                    value={selectedTimezone}
+                    onChange={setSelectedTimezone}
+                />
+            </div>
             <h3>
                 <b>{props.eventName}</b>
             </h3>
@@ -115,6 +124,7 @@ function AvailabilityApp(props) {
                 selectedDays={props.selectedDays}
                 startTime={props.startTime}
                 endTime={props.endTime}
+                selectedTimezone={selectedTimezone}
             />
             <NameInput
                 setName={setName}

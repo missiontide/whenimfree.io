@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { add, isEqual, differenceInHours } from 'date-fns';
+import { add, isEqual, differenceInHours } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 import AvailabilityList from "./AvailabilityList";
@@ -19,6 +20,7 @@ function AvailabilityGrid(props) {
     const selectedDays = props.selectedDays;
     const startTime = new Date(props.startTime);
     const endTime = new Date(props.endTime);
+    const selectedTimezone = props.selectedTimezone;
     const intervalsGrid = props.intervalsGrid;
     const setIntervalsGrid = props.setIntervalsGrid;
     const [maxAvailableCount, setMaxAvailableCount] = useState(0)
@@ -33,8 +35,10 @@ function AvailabilityGrid(props) {
 
             const newDayColumn = [];
 
+            // apply selected timezone to our utc startDatetime
+            let intervalDatetime = utcToZonedTime(new Date(startDatetimeWithTimezone), selectedTimezone.value)
+
             // calculating end datetime: selected startDatetime + difference between start and end time
-            let intervalDatetime = new Date(startDatetimeWithTimezone);
             let hoursDifference = differenceInHours(endTime, startTime);
             let endDatetime = add(intervalDatetime, {hours: hoursDifference === 0 ? 24 : hoursDifference})
 
@@ -80,7 +84,7 @@ function AvailabilityGrid(props) {
         setMaxAvailableCount(max); // this is amount of names on interval(s) w/ most intersecting availabilities
 
         setIntervalsGrid(newIntervalsGrid)
-    }, [])
+    }, [props.selectedTimezone])
 
 
     const [selecting, setSelecting] = useState(false)
