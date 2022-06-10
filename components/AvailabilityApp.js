@@ -98,6 +98,7 @@ function AvailabilityApp(props) {
             );
         },
     );
+    UpdatingTooltip.displayName = 'UpdatingTooltip'
 
     return (
         <div className="App">
