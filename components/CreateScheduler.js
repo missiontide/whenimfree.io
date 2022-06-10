@@ -7,7 +7,7 @@ import SubmitButton from "./SubmitButton";
 import { ProgressBar, Toast, ToastContainer } from "react-bootstrap";
 
 import cuid from "cuid";
-import { parse } from "date-fns";
+import { parse, add } from "date-fns";
 import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz"
 
 function CreateScheduler() {
@@ -21,6 +21,19 @@ function CreateScheduler() {
     // create the scheduler and redirect user to the Availability Page
     function handleSubmit() {
         if (validateInputs() > 0) { return } // if there are any errors, do not continue
+        let endDateTime = parse(endTime, "p", new Date())
+        if (endTime === "12:00 AM") { // if 12:00 AM endtime, add 24 hours to the "0" time
+            endDateTime = add(endDateTime, {hours: 24})
+        }
+
+        // add start time to days
+        let startDatetime = parse(startTime, "p", new Date())
+        const selectDaysWithStartTimeAndTimezone = days.map((selectedDate) => {
+            let timelessDate = new Date(selectedDate.toDateString());
+            let dateAndStartTime = add(timelessDate, {hours: startDatetime.getHours()});
+            let dateAndStartTimeWithTimezone = zonedTimeToUtc(dateAndStartTime, selectedTimezone.value);
+            return dateAndStartTimeWithTimezone;
+        })
 
         setLoading(true);
         fetch('/api/create-scheduler', {
@@ -31,9 +44,9 @@ function CreateScheduler() {
             body: JSON.stringify({
                 url: createUniqueURL(),
                 eventName: eventName,
-                days: days,
-                startTime: zonedTimeToUtc(parse(startTime, "p", new Date()), selectedTimezone.value),
-                endTime: zonedTimeToUtc(parse(endTime, "p", new Date()), selectedTimezone.value),
+                days: selectDaysWithStartTimeAndTimezone,
+                startTime: zonedTimeToUtc(startDatetime, selectedTimezone.value),
+                endTime: zonedTimeToUtc(endDateTime, selectedTimezone.value),
             })
         }).then(
             response => {
@@ -62,9 +75,13 @@ function CreateScheduler() {
             newErrors.push(<>Select at least <b>1 day</b></>)
         }
         if (startTime === endTime && startTime === "12:00 AM") {
-
+            // allow both to be 12:00 AM: one is start of day one is end of day
         } else {
-            if (parse(startTime, "p", new Date()) >= parse(endTime, "p", new Date())) {
+            let endDateTime = parse(endTime, "p", new Date())
+            if (endTime === "12:00 AM") { // if 12:00 AM endtime, add 24 hours to the "0" time
+                endDateTime = add(endDateTime, {hours: 24})
+            }
+            if (parse(startTime, "p", new Date()) >= endDateTime) {
                 newErrors.push(<><b>First time must be earlier.</b></>)
             }
         }

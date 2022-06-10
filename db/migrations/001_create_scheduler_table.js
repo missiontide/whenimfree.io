@@ -8,7 +8,7 @@ exports.up = function(knex) {
           table.increments('id');
           table.string('url', 255).notNullable();
           table.string('eventName', 255).notNullable();
-          table.specificType('days', 'timestamp without time zone[]');
+          table.specificType('days', 'timestamp with time zone[]');
           table.datetime('startTime');
           table.datetime('endTime');
       })

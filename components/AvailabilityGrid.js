@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { add, isEqual } from 'date-fns';
+import { add, isEqual, differenceInHours } from 'date-fns';
 import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 import AvailabilityList from "./AvailabilityList";
@@ -29,22 +29,21 @@ function AvailabilityGrid(props) {
         selectedDays.sort((a,b) => {return new Date(a) - new Date(b)}); // sort the days
 
         // create a column for each selected day
-        selectedDays.forEach((datetime, colIdx) => {
-            datetime = new Date(datetime);
-            let date = new Date(datetime.toDateString())// remove time component
+        selectedDays.forEach((startDatetimeWithTimezone, colIdx) => {
+
             const newDayColumn = [];
 
-            // calculating start & end datetime: start and end is the selected day + start time and end time respectively
-            let startDatetime = add(new Date(date.getTime()), {hours: startTime.getHours()})
-            let endTimeHours = endTime.getHours();
-            let endDatetime = add(new Date(date.getTime()), {hours: endTimeHours === 0 ? 24 : endTimeHours})
+            // calculating end datetime: selected startDatetime + difference between start and end time
+            let intervalDatetime = new Date(startDatetimeWithTimezone);
+            let hoursDifference = differenceInHours(endTime, startTime);
+            let endDatetime = add(intervalDatetime, {hours: hoursDifference === 0 ? 24 : hoursDifference})
 
             let rowIdx = 0;
             // add an interval for every 15 minutes from start time to end time
-            while (!isEqual(startDatetime, endDatetime)) {
+            while (!isEqual(intervalDatetime, endDatetime)) {
                 // each row is a time intervals in the day
                 let rowInterval = {
-                    time: startDatetime.getTime(),
+                    time: intervalDatetime.getTime(),
                     selected: false,
                     colIdx: colIdx,
                     rowIdx: rowIdx,
@@ -53,7 +52,7 @@ function AvailabilityGrid(props) {
                     mouseoverHighlightAction: null, // used for determining whether to show as selected/unselected when highlighting
                 };
                 newDayColumn.push(rowInterval);
-                startDatetime = add(startDatetime, {minutes: 15}) // increment by 15 minutes
+                intervalDatetime = add(intervalDatetime, {minutes: 15}) // increment by 15 minutes
                 rowIdx++;
             }
 
