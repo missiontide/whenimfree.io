@@ -1,16 +1,18 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
 import dynamic from "next/dynamic"
 const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
 import NameInput from "./NameInput";
 import SubmitButton from "./SubmitButton";
-import {ProgressBar, Toast, ToastContainer} from "react-bootstrap";
+import {ProgressBar, Toast, ToastContainer, OverlayTrigger, Tooltip, Button} from "react-bootstrap";
+import {IoIosCopy} from "react-icons/io"
 
 function AvailabilityApp(props) {
     const [intervalsGrid, setIntervalsGrid] = useState([])
     const [name, setName] = useState("")
     const [loading, setLoading] = useState(false);
     const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    const [tooltipText, setTooltipText] = useState("Copy Link")
 
     /*
     ERROR HANDLING
@@ -85,6 +87,18 @@ function AvailabilityApp(props) {
         })
     }
 
+    // Handles size change of Tooltip when text changes
+    // See: https://react-bootstrap.github.io/components/overlays/#updating-position-dynamically
+    const UpdatingTooltip = React.forwardRef(
+        ({ tooltip, children, show: _, ...props }, ref) => {
+            return (
+                <Tooltip ref={ref} {...props}>
+                    {children}
+                </Tooltip>
+            );
+        },
+    );
+
     return (
         <div className="App">
             {loading && (
@@ -115,7 +129,27 @@ function AvailabilityApp(props) {
                 />
             </div>
             <h3>
-                <b>{props.eventName}</b>
+                <b>{props.eventName}</b>&nbsp;&nbsp;
+                <>
+                    <OverlayTrigger
+                        placement="top"
+                        trigger={['hover', 'focus']}
+                        overlay={(
+                            <UpdatingTooltip >
+                                {tooltipText}
+                            </UpdatingTooltip>
+                        )}>
+                        <Button
+                            variant="outline-dark"
+                            onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                                setTooltipText("Copied!");
+                            }}
+                            onMouseEnter={() => setTooltipText("Copy Link")}>
+                            <IoIosCopy />
+                        </Button>
+                    </OverlayTrigger>
+                </>
             </h3>
             <AvailabilityGrid
                 availabilities={props.availabilities}
