@@ -1,9 +1,8 @@
 .inputDiv {
-    margin: 0 auto;
-    max-width: 400px;
+
 }
 
 .inputDiv input {
-    height: 58px;
-    font-size: 18px;
+    height: 2.25rem;
+    font-size: 1rem;
 }

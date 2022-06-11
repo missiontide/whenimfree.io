@@ -1,30 +1,59 @@
 .App {
-    /*width: 25em;*/
     margin: 0 auto;
     text-align: center;
 }
-
-.submitButton {
-    margin-top: 30px;
+.schedulerHeader {
+    margin: 16px;
+    font-size: 1.5rem;
 }
+
+.schedulerCard {
+    width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.stepLabel {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.25rem;
+}
+.stepLabel:nth-child(3) { margin-top: 25px; }
+.stepLabel:nth-child(5) { margin-top: 0; }
 
 .dayPicker {
-    margin-top: 50px;
     font-size: 17px;
 }
-.timeSelectorDiv {
-    margin-top: 40px;
+.dayPicker .rdp { margin: 0; }
+.dayPicker .rdp-month {
+    background-color: rgba(0,0,0,.03);
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
 }
-.badgeDiv {
-    margin: 0 auto;
-    width: 150px;
-    height: 24px;
+.dayPicker .rdp-caption {
+    background-color: #CAECFF;
+    padding-left: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }
+.dayPicker .rdp-table {
+    margin: 0 15px 10px 15px;
+}
+p.dayPickerFooter {
+    height: 25.5px;
+    margin: 5px 0 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.submitButton {
+    float: right;
+}
+
 
 /* DayPicker styling */
 /* from https://react-day-picker.js.org/basics/styling */
 :root {
-    --rdp-cell-size: 50px !important;
+    --rdp-cell-size: 40px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     /* Switch to dark colors for dark themes */

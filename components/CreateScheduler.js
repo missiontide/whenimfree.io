@@ -4,11 +4,11 @@ import EventNameInput from "./EventNameInput";
 import DayPickerCalendar from "./DayPickerCalendar"
 import TimeSelector from "./TimeSelector";
 import SubmitButton from "./SubmitButton";
-import { ProgressBar, Toast, ToastContainer } from "react-bootstrap";
+import { ProgressBar, Toast, ToastContainer, Card } from "react-bootstrap";
 
 import cuid from "cuid";
 import { parse, add } from "date-fns";
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz"
+import { zonedTimeToUtc } from "date-fns-tz"
 
 function CreateScheduler() {
     const [eventName, setEventName] = useState("");
@@ -120,29 +120,36 @@ function CreateScheduler() {
                         )
                 })}
             </ToastContainer>
-
-            <div>
-                <EventNameInput
-                    eventName={eventName}
-                    setEventName={setEventName}
-                />
-                <DayPickerCalendar
-                    days={days}
-                    setDays={setDays}
-                />
-                <TimeSelector
-                    selectedTimezone={selectedTimezone}
-                    setSelectedTimezone={setSelectedTimezone}
-                    startTime={startTime}
-                    setStartTime={setStartTime}
-                    endTime={endTime}
-                    setEndTime={setEndTime}
-                />
-                <SubmitButton
-                    text="Create Scheduler"
-                    onClick={handleSubmit}
-                />
-            </div>
+            <h3 className="schedulerHeader">New Event</h3>
+            <Card className="schedulerCard">
+                <Card.Body>
+                    <label className="stepLabel">Event Name</label>
+                    <EventNameInput
+                        eventName={eventName}
+                        setEventName={setEventName}
+                    />
+                    <label className="stepLabel">Pick Days</label>
+                    <DayPickerCalendar
+                        days={days}
+                        setDays={setDays}
+                    />
+                    <label className="stepLabel"> Choose Timeframe</label>
+                    <TimeSelector
+                        selectedTimezone={selectedTimezone}
+                        setSelectedTimezone={setSelectedTimezone}
+                        startTime={startTime}
+                        setStartTime={setStartTime}
+                        endTime={endTime}
+                        setEndTime={setEndTime}
+                    />
+                </Card.Body>
+                <Card.Footer>
+                    <SubmitButton
+                        text="Create Scheduler"
+                        onClick={handleSubmit}
+                    />
+                </Card.Footer>
+            </Card>
         </div>
     );
 }
