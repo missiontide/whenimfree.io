@@ -1,17 +1,21 @@
-.timeSelector {
-    width: 200px;
+.timeSelectorDiv {
+    width: 150px;
+    margin-top: 5px;
+    margin-right: 5px;
+    float:left;
 }
-.timeSelector.left {
-    float: right;
+.timeSelectorDiv.first {
+    clear:left;
 }
-.floatingLabel.left {
-    float: right;
+.timeSelectorDiv select {
+    font-size: 1rem;
 }
 .timezoneDiv {
-    max-width: 408px;
+    width: 305px;
     margin: 0 auto;
     font-size: 12px;
     text-align: left;
+    float: left;
 }
 #react-select-3-listbox div div {
     padding: 5px 5px !important;
