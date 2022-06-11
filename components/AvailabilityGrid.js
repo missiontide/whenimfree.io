@@ -5,6 +5,7 @@ import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 import AvailabilityList from "./AvailabilityList";
 import ClearButton from "./ClearButton";
+import { Card } from "react-bootstrap"
 
 /*
 interval object {
@@ -210,9 +211,16 @@ function AvailabilityGrid(props) {
         setSomethingSelected(false)
     }
 
+    function nextDayIsAdjacent(currentIdx) {
+        // only returns true if the difference in hours between this and next column interval is 24 hours
+        if (currentIdx === intervalsGrid.length - 1) { return false }
+        return 24 === differenceInHours(intervalsGrid[currentIdx + 1][0].time, intervalsGrid[currentIdx][0].time)
+    }
+
     return (
         <>
             <div className="availabilityGrid">
+                <div className="gridSpace" style={{'width': maxAvailableCount > 0 ? '640px' : '100%'}}>
                 {intervalsGrid.length > 0 &&
                     <TimeColumn
                         timeIntervals={intervalsGrid[0]}
@@ -222,6 +230,7 @@ function AvailabilityGrid(props) {
                 {intervalsGrid.map((col, colIdx) => { return (
                     <DayColumn
                         key={colIdx}
+                        nextDayIsAdjacent={nextDayIsAdjacent(colIdx)}
                         timeIntervals={col}
                         maxAvailableCount={maxAvailableCount}
                         onMouseDown={handleMouseDown}
@@ -229,27 +238,29 @@ function AvailabilityGrid(props) {
                         onMouseOut={handleMouseOut}
                     />
                 )})}
-                {showList &&
-                    <AvailabilityList
-                        totalNames={props.availabilities.length}
-                        intervalDatetime={intervalDatetime}
-                        namesAvailable={namesAvailable}
-                        namesUnavailable={namesUnavailable}
-                    />
-                }
+                </div>
+                {maxAvailableCount > 0 && (
+                    <div className="availabilityListSpace">
+                        <Card className="availabilityListCard">
+                        {showList &&
+                            <AvailabilityList
+                                totalNames={props.availabilities.length}
+                                intervalDatetime={intervalDatetime}
+                                namesAvailable={namesAvailable}
+                                namesUnavailable={namesUnavailable}
+                            />
+                        }
+                        </Card>
+                    </div>
+                )}
             </div>
-            <div className="badgeDiv">
+            <div className="badgeDiv" style={{'margin-right': maxAvailableCount > 0 ? '200px' : '0'}}>
                 {somethingSelected &&
                     <ClearButton
                         text="Clear Selection"
                         onClick={clearSelection}
                     />
                 }
-            </div>
-            <div className="caption">
-                <p>Click and drag to indicate your availability.<br/>
-                    Mouseover to see others&apos; availability.
-                </p>
             </div>
         </>
     )

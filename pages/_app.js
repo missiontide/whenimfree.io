@@ -7,6 +7,7 @@ import '../styles/Calendar.css'
 import '../styles/TimeSelector.css'
 import '../styles/AvailabilityApp.css'
 import '../styles/AvailabilityGrid.css'
+import '../styles/AvailabilityList.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />

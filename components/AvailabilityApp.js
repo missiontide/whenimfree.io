@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
 import NameInput from "./NameInput";
 import SubmitButton from "./SubmitButton";
-import {ProgressBar, Toast, ToastContainer, OverlayTrigger, Tooltip, Button} from "react-bootstrap";
+import {ProgressBar, Toast, ToastContainer, OverlayTrigger, Tooltip, Button, Card} from "react-bootstrap";
 import {IoIosCopy} from "react-icons/io"
 
 function AvailabilityApp(props) {
@@ -13,6 +13,10 @@ function AvailabilityApp(props) {
     const [loading, setLoading] = useState(false);
     const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
     const [tooltipText, setTooltipText] = useState("Copy Link")
+
+    useEffect(() => {
+        document.title = props.eventName + " | whenimfree.io"
+    }, [])
 
     /*
     ERROR HANDLING
@@ -123,13 +127,7 @@ function AvailabilityApp(props) {
                     )
                 })}
             </ToastContainer>
-            <div className="availabilityTimezoneDiv">
-                <TimezoneSelect
-                    value={selectedTimezone}
-                    onChange={setSelectedTimezone}
-                />
-            </div>
-            <h3>
+            <h3 className="availabilityHeader">
                 <b>{props.eventName}</b>&nbsp;&nbsp;
                 <>
                     <OverlayTrigger
@@ -152,22 +150,45 @@ function AvailabilityApp(props) {
                     </OverlayTrigger>
                 </>
             </h3>
-            <AvailabilityGrid
-                availabilities={props.availabilities}
-                intervalsGrid={intervalsGrid}
-                setIntervalsGrid={setIntervalsGrid}
-                selectedDays={props.selectedDays}
-                startTime={props.startTime}
-                endTime={props.endTime}
-                selectedTimezone={selectedTimezone}
-            />
-            <NameInput
-                setName={setName}
-            />
-            <SubmitButton
-                onClick={handleSubmit}
-                text="Submit Availability"
-            />
+            <Card className="availabilityCard">
+                <Card.Header>
+                    <div className="availabilityTimezoneDiv">
+                        <TimezoneSelect
+                            value={selectedTimezone}
+                            onChange={setSelectedTimezone}
+                        />
+                    </div>
+                    <div className="caption">
+                        {props.availabilities.length > 0 ? (
+                            <p>Click and drag to indicate your availability.<br/>
+                                Mouseover to see others&apos; availability.</p>
+                        ) : (
+                            <p><br/>Click and drag to indicate your availability.</p>
+                        )}
+
+                    </div>
+                </Card.Header>
+                <Card.Body>
+                    <AvailabilityGrid
+                        availabilities={props.availabilities}
+                        intervalsGrid={intervalsGrid}
+                        setIntervalsGrid={setIntervalsGrid}
+                        selectedDays={props.selectedDays}
+                        startTime={props.startTime}
+                        endTime={props.endTime}
+                        selectedTimezone={selectedTimezone}
+                    />
+                </Card.Body>
+                <Card.Footer>
+                    <SubmitButton
+                        onClick={handleSubmit}
+                        text="Submit Availability"
+                    />
+                    <NameInput
+                        setName={setName}
+                    />
+                </Card.Footer>
+            </Card>
         </div>
     )
 }

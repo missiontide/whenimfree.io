@@ -12,7 +12,7 @@ function Name(props) {
             <Form.Control
                 value={props.eventName}
                 onChange={handleChange}
-                placeholder="enter your name..."
+                placeholder="Enter your name..."
                 autoFocus
             />
         </div>

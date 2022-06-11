@@ -5,8 +5,11 @@ function DayColumn(props) {
     const date = format(props.timeIntervals[0].time, "MMM d")
     const day = format(props.timeIntervals[0].time, "eee")
 
+    let className = "dayColumn disable-select"
+    if (props.nextDayIsAdjacent) {className += " nextDayIsAdjacent"}
+
     return (
-        <div className="dayColumn disable-select">
+        <div className={className}>
             <div className="date">
                 {date}
                 <div className="day">{day}</div>

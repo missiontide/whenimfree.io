@@ -5,12 +5,16 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-        <p className="signature">
-            made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
-        </p>
-        <Image src={logo} className="App-logo" alt="logo" />
-        <CreateScheduler />
-    </div>
+      <>
+          <title>whenimfree.io</title>
+          <div className={styles.container}>
+              <p className="signature">
+                  made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
+              </p>
+              <Image src={logo} className="App-logo" alt="logo" />
+              <CreateScheduler />
+          </div>
+      </>
+
   )
 }

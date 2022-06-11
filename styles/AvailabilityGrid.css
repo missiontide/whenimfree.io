@@ -1,17 +1,23 @@
-.availabilityGrid { margin-top: 30px; }
-.caption {
-    margin-top: 5px;
-    font-size: 14px;
+.availabilityGrid {  }
+.gridSpace {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    float: left;
 }
 
 /* TIME and DAY COLUMNS*/
-.timeColumn { display: inline-grid; text-align: right }
+.timeColumn { display: inline-grid; text-align: right; margin-right: 5px; }
 .timeColumn .spacer { margin-bottom: 15px;}
 .timeColumn .timeCell { font-size: 10px; height: 9px; }
 
 .dayColumn {
     display: inline-grid;
-    margin: 5px;
+    margin: 5px 10px 5px 0;
+}
+.dayColumn.nextDayIsAdjacent {
+    margin: 5px 0;
+    border-right: none;
 }
 .dayColumn .date { font-size: 10px; }
 .dayColumn .day { font-size: 16px; margin-top: -6px}
@@ -43,6 +49,12 @@
     border-width: 0 1px 1px 1px;
 }
 
+/*Next day is adjacent: remove right border*/
+.nextDayIsAdjacent .dayCell { border-width: 0 0 0 1px; }
+.nextDayIsAdjacent .dayCell.hour {border-width: 1px 0 0 1px;}
+.nextDayIsAdjacent .dayCell.thirty {border-width: 1px 0 0 1px;}
+.nextDayIsAdjacent .dayCell:last-child {border-width: 0 0 1px 1px;}
+
 .disable-select {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -53,9 +65,10 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-/* Availability List */
-.availabilityList {
-    position: absolute;
-    left: 30px;
-    top: 90px;
+.badgeDiv {
+    height: 24px;
+    clear: both;
+}
+.clearBadge {
+    cursor: pointer;
 }

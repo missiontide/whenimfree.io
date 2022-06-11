@@ -1,0 +1,29 @@
+.availabilityListSpace {
+    height: 369px;
+    width: 200px;
+    float: right;
+}
+
+.availabilityListCard {
+    height: inherit;
+    width: inherit;
+}
+
+.availabilityList {
+
+}
+
+span.availabilityDate {
+    font-size: 0.75rem;
+}
+.availabilityTable th {
+    font-size: .9rem;
+    padding: .15rem !important;
+    width: 50%;
+}
+
+.availabilityTable td {
+    font-size: .8rem;
+    padding: .1rem 0 .1rem .5rem;
+    text-align: left;
+}
