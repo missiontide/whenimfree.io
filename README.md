@@ -1,4 +1,4 @@
-# [whenimfree.io](https://whenimfree-io.vercel.app/)
+# [whenimfree.io](https://whenimfree.io/)
 
 Quickly see when your friends are free.\
 made by [@missiontide](https://missiontide.com).
