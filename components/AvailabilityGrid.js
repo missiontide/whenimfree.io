@@ -254,7 +254,7 @@ function AvailabilityGrid(props) {
                     </div>
                 )}
             </div>
-            <div className="badgeDiv" style={{'margin-right': maxAvailableCount > 0 ? '200px' : '0'}}>
+            <div className="badgeDiv" style={{'marginRight': maxAvailableCount > 0 ? '200px' : '0'}}>
                 {somethingSelected &&
                     <ClearButton
                         text="Clear Selection"

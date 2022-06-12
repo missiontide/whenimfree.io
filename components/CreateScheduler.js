@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import EventNameInput from "./EventNameInput";
 import DayPickerCalendar from "./DayPickerCalendar"
@@ -6,7 +6,6 @@ import TimeSelector from "./TimeSelector";
 import SubmitButton from "./SubmitButton";
 import { ProgressBar, Toast, ToastContainer, Card } from "react-bootstrap";
 
-import cuid from "cuid";
 import { parse, add } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz"
 
@@ -42,7 +41,6 @@ function CreateScheduler() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                url: createUniqueURL(),
                 eventName: eventName,
                 days: selectDaysWithStartTimeAndTimezone,
                 startTime: zonedTimeToUtc(startDatetime, selectedTimezone.value),
@@ -152,10 +150,6 @@ function CreateScheduler() {
             </Card>
         </div>
     );
-}
-
-function createUniqueURL() {
-    return cuid.slug();
 }
 
 export default CreateScheduler;
