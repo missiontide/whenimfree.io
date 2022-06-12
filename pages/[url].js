@@ -5,6 +5,7 @@ import logo from "../public/logo.png";
 import Image from "next/image";
 import Link from 'next/link'
 import FourOhFour from "./404"
+import Head from "next/head";
 
 function Page({
                   id: id,
@@ -18,24 +19,34 @@ function Page({
     if (id === "error") { return FourOhFour(); }
 
     return (
-        <div className={styles.container}>
-            <p className="signature">
-                made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
-            </p>
-            <p>
-                <Link href="/">
-                    <a><Image src={logo} className="App-logo" alt="logo" /></a>
-                </Link>
-            </p>
-            <AvailabilityApp
-                scheduler_id={id}
-                eventName={eventName}
-                selectedDays={JSON.parse(days)}
-                startTime={startTime}
-                endTime={endTime}
-                availabilities={JSON.parse(availabilities)}
-            />
-        </div>
+        <>
+            <div className={styles.container}>
+                <p className="signature">
+                    made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
+                </p>
+                <p>
+                    <Link href="/">
+                        <a><Image src={logo} className="App-logo" alt="logo" /></a>
+                    </Link>
+                </p>
+                <AvailabilityApp
+                    scheduler_id={id}
+                    eventName={eventName}
+                    selectedDays={JSON.parse(days)}
+                    startTime={startTime}
+                    endTime={endTime}
+                    availabilities={JSON.parse(availabilities)}
+                />
+            </div>
+            <Head>
+                <title>{eventName + "| whenimfree.io"}</title>
+                <meta property="og:url" content={"https://whenimfree.io/" + url} />
+                <meta property="og:title" content={"See everyone's availability for " + eventName} />
+                <meta property="og:description" content="whenimfree.io: Quickly find the best time for an event with friends!" />
+                <meta property="og:image" content="https://whenimfree.io/social-media-card.png" />
+                <meta property="og:type" content="website" />
+            </Head>
+        </>
     )
 }
 

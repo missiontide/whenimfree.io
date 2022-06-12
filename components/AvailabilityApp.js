@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
 import dynamic from "next/dynamic"
 const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
@@ -13,10 +13,6 @@ function AvailabilityApp(props) {
     const [loading, setLoading] = useState(false);
     const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
     const [tooltipText, setTooltipText] = useState("Copy Link")
-
-    useEffect(() => {
-        document.title = props.eventName + " | whenimfree.io"
-    }, [])
 
     /*
     ERROR HANDLING
