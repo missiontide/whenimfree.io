@@ -24,7 +24,7 @@ function Page({
                 <p className="signature">
                     made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
                 </p>
-                <p>
+                <p className="pLogo">
                     <Link href="/">
                         <a><Image src={logo} className="App-logo" alt="logo" /></a>
                     </Link>

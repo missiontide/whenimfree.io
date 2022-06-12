@@ -2,8 +2,8 @@
     /* Logo resizing */
     .App-logo {
         min-width: 190px !important;
-        height: auto !important;
-        min-height: auto !important;
+        height: 33.78px !important;
+        min-height: 33.78px !important;
         position: absolute !important;
         top: -16px !important;
         left: -130px !important;
@@ -14,10 +14,14 @@
     }
 
     /* Scheduler App */
-    .schedulerHeader {
-        margin: 0 0 16px 0;
-    }
+    .schedulerHeader { margin: 0 0 16px 0; }
     .schedulerCard {
         margin: 0 5px;
     }
+
+    /* Availability App */
+    .availabilityHeader { margin: 0 0 16px 0; }
+    .pLogo { height: 32px; }
+    .submitButton {font-size: 12px; margin-left: 5px; height: 36px;}
+    .nameInputDiv input { margin-right: 0; width:195px;}
 }

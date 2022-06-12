@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AvailabilityGrid from "./AvailabilityGrid";
 import dynamic from "next/dynamic"
 const TimezoneSelect = dynamic(import('react-timezone-select'), {ssr: false}) // workaround for next.js hydration error
@@ -13,6 +13,20 @@ function AvailabilityApp(props) {
     const [loading, setLoading] = useState(false);
     const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
     const [tooltipText, setTooltipText] = useState("Copy Link")
+    const [width, setWidth] = useState();
+
+    // listener for determining if user is on mobile
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+    const isMobile = () => {return width <= 600}
 
     /*
     ERROR HANDLING
@@ -154,15 +168,17 @@ function AvailabilityApp(props) {
                             onChange={setSelectedTimezone}
                         />
                     </div>
-                    <div className="caption">
-                        {props.availabilities.length > 0 ? (
-                            <p>Click and drag to indicate your availability.<br/>
-                                Mouseover to see others&apos; availability.</p>
-                        ) : (
-                            <p><br/>Click and drag to indicate your availability.</p>
-                        )}
+                    {!isMobile() && (
+                        <div className="caption">
+                            {props.availabilities.length > 0 ? (
+                                <p>Click and drag to indicate your availability.<br/>
+                                    Mouseover to see others&apos; availability.</p>
+                            ) : (
+                                <p><br/>Click and drag to indicate your availability.</p>
+                            )}
 
-                    </div>
+                        </div>
+                    )}
                 </Card.Header>
                 <Card.Body>
                     <AvailabilityGrid
@@ -173,6 +189,7 @@ function AvailabilityApp(props) {
                         startTime={props.startTime}
                         endTime={props.endTime}
                         selectedTimezone={selectedTimezone}
+                        isMobile={isMobile}
                     />
                 </Card.Body>
                 <Card.Footer>
