@@ -292,7 +292,9 @@ function AvailabilityGrid(props) {
     } else if (props.isMobile) { // if mobile, show a switch to turn on touch viewing
         availabilityListCardContent = (
             <>
-                <span className="switchCaption">{touchToView && "Touch a time to see who's free"}</span>
+                <span className="switchCaption">
+                    {touchToView ? "Touch a time to see who's free" : "Touch a time to select when you're free"}
+                </span>
 
                 <div className="availabilitySwitch">
 

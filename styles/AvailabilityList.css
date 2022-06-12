@@ -48,14 +48,15 @@ span.availabilityTime { font-size: 0.9rem; }
 }
 
 .availabilitySwitch {
+    margin-top: -4px;
     display: flex;
-    margin: 0 auto;
+    align-content: center;
+    justify-content: center;
 }
-.availabilitySwitch span {
-    font-size: .9rem;
-}
+.availabilitySwitch span { font-size: 16px; padding-top: 4px; }
+.availabilitySwitch .form-switch { font-size: 1.4rem; }
 .switchCaption {
     margin-top: 9px;
     height: 20px;
-    font-size: .8rem;
+    font-size: .75rem;
 }
