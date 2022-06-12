@@ -34,4 +34,7 @@
     .listInfo {
         padding-top: 17px;
     }
+    .dayCells {
+        touch-action: none; /* prevent scrolling when selecting */
+    }
 }

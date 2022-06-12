@@ -97,22 +97,26 @@ function AvailabilityGrid(props) {
     MOUSE DOWN: set origin and whether user is selecting or removing
     */
     function handleMouseDown(selectedInterval) {
+        if (props.isMobile) { return }
+        initializeHighlighting(selectedInterval)
+        document.addEventListener("mouseup", handleMouseUp)
+    }
+
+    function initializeHighlighting(selectedInterval) {
         const newIntervalsGrid = intervalsGrid.slice();
         const {colIdx, rowIdx} = selectedInterval
-        const interval = newIntervalsGrid[colIdx][rowIdx]
 
-        if (interval.selected === false) {
-            interval.selected = true;
+        if (newIntervalsGrid[colIdx][rowIdx].selected === false) {
+            newIntervalsGrid[colIdx][rowIdx].selected = true;
             setSelecting(true)
         } else {
-            interval.selected = false;
+            newIntervalsGrid[colIdx][rowIdx].selected = false;
             setRemoving(true)
         }
         setOrigin({
             colIdx: colIdx,
             rowIdx: rowIdx,
         })
-        document.addEventListener("mouseup", handleMouseUp)
         setIntervalsGrid(newIntervalsGrid)
     }
 
@@ -211,7 +215,7 @@ function AvailabilityGrid(props) {
             setIntervalDatetime(selectedInterval.time)
         }  else {
             // selecting & highlighting intervals
-            handleMouseDown(selectedInterval)
+            initializeHighlighting(selectedInterval)
         }
     }
 
@@ -302,7 +306,7 @@ function AvailabilityGrid(props) {
 
     return (
         <>
-            <div className="availabilityGrid">
+            <div className="availabilityGrid" style={{'touch-action': 'none'}}>
                 <div className="gridSpace">
                 {intervalsGrid.length > 0 &&
                     <TimeColumn
