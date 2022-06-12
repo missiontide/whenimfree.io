@@ -39,7 +39,7 @@ function Page({
                 />
             </div>
             <Head>
-                <title>{eventName + "| whenimfree.io"}</title>
+                <title>{eventName + " | whenimfree.io"}</title>
                 <meta property="og:url" content={"https://whenimfree.io/" + url} />
                 <meta property="og:title" content={"See everyone's availability for " + eventName} />
                 <meta property="og:description" content="whenimfree.io: Quickly find the best time for an event with friends!" />

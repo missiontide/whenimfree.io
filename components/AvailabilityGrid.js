@@ -231,7 +231,7 @@ function AvailabilityGrid(props) {
     return (
         <>
             <div className="availabilityGrid">
-                <div className="gridSpace" style={{'width': maxAvailableCount > 0 ? '640px' : '100%'}}>
+                <div className="gridSpace">
                 {intervalsGrid.length > 0 &&
                     <TimeColumn
                         timeIntervals={intervalsGrid[0]}
@@ -254,6 +254,15 @@ function AvailabilityGrid(props) {
                     />
                 )})}
                 </div>
+                <div className="badgeDiv">
+                    {props.availabilities.length > 0 && <span className="listCaption">Availability:</span>}
+                    {somethingSelected &&
+                        <ClearButton
+                            text="Clear Selection"
+                            onClick={clearSelection}
+                        />
+                    }
+                </div>
                 {maxAvailableCount > 0 && (
                     <div className="availabilityListSpace">
                         <Card className="availabilityListCard">
@@ -269,14 +278,7 @@ function AvailabilityGrid(props) {
                     </div>
                 )}
             </div>
-            <div className="badgeDiv" style={{'marginRight': maxAvailableCount > 0 ? '200px' : '0'}}>
-                {somethingSelected &&
-                    <ClearButton
-                        text="Clear Selection"
-                        onClick={clearSelection}
-                    />
-                }
-            </div>
+
         </>
     )
 }

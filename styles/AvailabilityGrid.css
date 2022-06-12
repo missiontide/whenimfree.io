@@ -3,7 +3,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    float: left;
+    margin: 0 auto;
 }
 
 /* TIME and DAY COLUMNS*/
@@ -67,6 +67,7 @@
 
 .badgeDiv {
     height: 24px;
+    margin-bottom: 8px;
     clear: both;
 }
 .clearBadge {

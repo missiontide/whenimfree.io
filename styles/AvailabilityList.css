@@ -1,7 +1,5 @@
 .availabilityListSpace {
-    height: 369px;
-    width: 200px;
-    float: right;
+    height: 56px;
 }
 
 .availabilityListCard {
@@ -10,20 +8,41 @@
 }
 
 .availabilityList {
-
+    height: inherit;
 }
 
-span.availabilityDate {
-    font-size: 0.75rem;
-}
-.availabilityTable th {
-    font-size: .9rem;
-    padding: .15rem !important;
-    width: 50%;
+.listCaption {
+    position: absolute;
+    margin-top: 11px;
+    font-size: 14px;
+    left: 30px;
 }
 
-.availabilityTable td {
-    font-size: .8rem;
-    padding: .1rem 0 .1rem .5rem;
+.listInfo {
+    float: left;
+    height: 100%;
+    width: 85px;
+    padding-top: 7px;
+    padding-right: 7px;
+    background: #e9ecef;
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-right: 1px solid #ced4da;
+    text-align: right;
+    line-height: 0.8;
+    margin-right: 5px;
+}
+span.listCount { font-size: 1rem; }
+span.availabilityDate { font-size: 0.75rem; }
+span.availabilityTime { font-size: 0.9rem; }
+
+.listNames {
+    display: table;
+    height: inherit;
     text-align: left;
+    font-size: .8rem;
+    line-height: 1;
+}
+.listNames span {
+    display: table-cell;
+    vertical-align: middle;
 }
