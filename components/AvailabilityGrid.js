@@ -292,7 +292,10 @@ function AvailabilityGrid(props) {
     } else if (props.isMobile) { // if mobile, show a switch to turn on touch viewing
         availabilityListCardContent = (
             <>
+                <span className="switchCaption">{touchToView && "Touch a time to see who's free"}</span>
+
                 <div className="availabilitySwitch">
+
                     <span>Add Yours</span>
                     &nbsp;
                     <Form.Switch
@@ -302,14 +305,13 @@ function AvailabilityGrid(props) {
                     &nbsp;
                     <span>See Others&apos;</span>
                 </div>
-                {touchToView && <><br/><span className="switchCaption">Touch a time to see who&apos;s free</span></>}
             </>
         )
     }
 
     return (
         <>
-            <div className="availabilityGrid" style={{'touch-action': 'none'}}>
+            <div className="availabilityGrid">
                 <div className="gridSpace">
                 {intervalsGrid.length > 0 &&
                     <TimeColumn

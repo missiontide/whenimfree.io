@@ -1,4 +1,6 @@
-.availabilityGrid {  }
+.availabilityGrid {
+    touch-action: none;
+}
 .gridSpace {
     overflow-x: auto;
     overflow-y: hidden;
