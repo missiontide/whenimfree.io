@@ -4,8 +4,8 @@ function TimeColumn(props) {
     // create an array of the date-times from timeInterval object
     const timesToDisplay = props.timeIntervals.map((timeInterval) => timeInterval.time)
 
-    // add the last hour
-    const finalTime = add(new Date(timesToDisplay.at(-1)), {minutes: 15})
+    // add the last hour to display times
+    const finalTime = add(new Date(timesToDisplay[timesToDisplay.length - 1]), {minutes: 15})
     timesToDisplay.push(finalTime)
 
     return (
