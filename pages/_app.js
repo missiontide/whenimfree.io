@@ -8,6 +8,7 @@ import '../styles/TimeSelector.css'
 import '../styles/AvailabilityApp.css'
 import '../styles/AvailabilityGrid.css'
 import '../styles/AvailabilityList.css'
+import '../styles/phoneStyles.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />

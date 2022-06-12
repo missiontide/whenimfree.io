@@ -26,9 +26,10 @@ a {
 }
 
 .App-logo {
-    position: absolute !important;
+    height: auto;
     top: 10px !important;
 }
+
 .signature {
     position: absolute;
     top: 10px;
