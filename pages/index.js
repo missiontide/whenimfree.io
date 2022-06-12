@@ -14,6 +14,11 @@ export default function Home() {
               <Image src={logo} className="App-logo" alt="logo" />
               <CreateScheduler />
           </div>
+          <meta property="og:url" content="https://whenimfree.io" />
+          <meta property="og:title" content="whenimfree.io - Get availability fast!" />
+          <meta property="og:description" content="Quickly find the best time for an event with friends!" />
+          <meta property="og:image" content="../public/website-social-card.png" />
+          <meta property="og:type" content="website" />
       </>
 
   )
