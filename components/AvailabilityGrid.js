@@ -164,6 +164,17 @@ function AvailabilityGrid(props) {
         }
     }
 
+    function handleTouchMove(e) {
+        if (e.touches.length === 1) {
+            // must use elementFromPoint to get actual touch target
+            let touch = e.touches[0];
+            let target = document.elementFromPoint(touch.clientX, touch.clientY);
+            handleMouseOver(intervalsGrid[target.getAttribute('colidx')][target.getAttribute('rowidx')])
+        } else {
+            return true;
+        }
+    }
+
     function handleMouseOut() {
         setShowList(false)
     }
@@ -230,12 +241,16 @@ function AvailabilityGrid(props) {
                 {intervalsGrid.map((col, colIdx) => { return (
                     <DayColumn
                         key={colIdx}
+                        colIdx={colIdx}
                         nextDayIsAdjacent={nextDayIsAdjacent(colIdx)}
                         timeIntervals={col}
                         maxAvailableCount={maxAvailableCount}
                         onMouseDown={handleMouseDown}
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
+                        onTouchStart={handleMouseDown}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleMouseUp}
                     />
                 )})}
                 </div>

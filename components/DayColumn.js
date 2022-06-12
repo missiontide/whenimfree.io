@@ -18,11 +18,15 @@ function DayColumn(props) {
                 <DayCell
                     key={rowIdx}
                     rowIdx={rowIdx}
+                    colIdx={props.colIdx}
                     interval={interval}
                     maxAvailableCount={props.maxAvailableCount}
                     onMouseDown={props.onMouseDown}
                     onMouseOver={props.onMouseOver}
                     onMouseOut={props.onMouseOut}
+                    onTouchStart={props.onTouchStart}
+                    onTouchMove={props.onTouchMove}
+                    onTouchEnd={props.onTouchEnd}
                 />
             )})}
         </div>

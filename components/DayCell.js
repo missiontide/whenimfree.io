@@ -38,6 +38,11 @@ function DayCell(props) {
             onMouseDown={() => props.onMouseDown(props.interval)}
             onMouseOver={() => props.onMouseOver(props.interval)}
             onMouseOut={() => props.onMouseOut()}
+            onTouchStart={() => props.onTouchStart(props.interval)}
+            onTouchMove={(e) => {props.onTouchMove(e)}}
+            onTouchEnd={() => props.onTouchEnd()}
+            rowidx={props.rowIdx}
+            colidx={props.colIdx}
         >
         </div>
     );
