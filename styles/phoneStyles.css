@@ -24,4 +24,14 @@
     .pLogo { height: 32px; }
     .submitButton {font-size: 12px; margin-left: 5px; height: 36px;}
     .nameInputDiv input { margin-right: 0; width:195px;}
+
+    .availabilityCard {
+        margin: 0 5px;
+    }
+    .availabilityListSpace {
+        height: 84px;
+    }
+    .listInfo {
+        padding-top: 17px;
+    }
 }

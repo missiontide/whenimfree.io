@@ -46,3 +46,9 @@ span.availabilityTime { font-size: 0.9rem; }
     display: table-cell;
     vertical-align: middle;
 }
+
+.availabilitySwitch {
+    display: flex;
+    margin: 13px auto 0 auto;
+}
+.availabilitySwitch span { font-size: .9rem; }

@@ -5,7 +5,7 @@ import DayColumn from "./DayColumn";
 import TimeColumn from "./TimeColumn";
 import AvailabilityList from "./AvailabilityList";
 import ClearButton from "./ClearButton";
-import { Card } from "react-bootstrap"
+import { Card, Form } from "react-bootstrap"
 
 /*
 interval object {
@@ -25,6 +25,7 @@ function AvailabilityGrid(props) {
     const intervalsGrid = props.intervalsGrid;
     const setIntervalsGrid = props.setIntervalsGrid;
     const [maxAvailableCount, setMaxAvailableCount] = useState(0)
+    const [touchToView, setTouchToView] = useState(false)
 
     // initializing intervals grid
     useEffect(() => {
@@ -150,6 +151,7 @@ function AvailabilityGrid(props) {
     const [namesUnavailable, setNamesUnavailable] = useState([])
     const [intervalDatetime, setIntervalDatetime] = useState()
     function handleMouseOver(selectedInterval) {
+        if (props.isMobile) { return } // prevent a weird touch up = mouseover trigger
         if (selecting || removing) {
             // if highlighting, handle highlights
             setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
@@ -161,17 +163,6 @@ function AvailabilityGrid(props) {
                 setNamesUnavailable(selectedInterval.namesUnavailable)
                 setIntervalDatetime(selectedInterval.time)
             }
-        }
-    }
-
-    function handleTouchMove(e) {
-        if (e.touches.length === 1) {
-            // must use elementFromPoint to get actual touch target
-            let touch = e.touches[0];
-            let target = document.elementFromPoint(touch.clientX, touch.clientY);
-            handleMouseOver(intervalsGrid[target.getAttribute('colidx')][target.getAttribute('rowidx')])
-        } else {
-            return true;
         }
     }
 
@@ -208,6 +199,61 @@ function AvailabilityGrid(props) {
         setIntervalsGrid(newIntervalsGrid)
     }
 
+    /*
+    TOUCH SUPPORT
+    */
+    function handleTouchStart(selectedInterval){
+        if (touchToView) {
+            // viewing availabilities
+            setShowList(true)
+            setNamesAvailable(selectedInterval.namesAvailable)
+            setNamesUnavailable(selectedInterval.namesUnavailable)
+            setIntervalDatetime(selectedInterval.time)
+        }  else {
+            // selecting & highlighting intervals
+            handleMouseDown(selectedInterval)
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (e.touches.length === 1) {
+            // must use elementFromPoint to get actual touch target
+            let touch = e.touches[0];
+            let target = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (target === null) return true;
+
+            let colIdx = target.getAttribute('colidx');
+            let rowIdx = target.getAttribute('rowidx');
+            if (colIdx === null || rowIdx === null) return true;
+
+            const selectedInterval = intervalsGrid[colIdx][rowIdx]
+            if (touchToView) {
+                // viewing availabilities
+                setNamesAvailable(selectedInterval.namesAvailable)
+                setNamesUnavailable(selectedInterval.namesUnavailable)
+                setIntervalDatetime(selectedInterval.time)
+            } else {
+                // selecting & highlighting intervals to here
+                setToHere({colIdx: selectedInterval.colIdx, rowIdx: selectedInterval.rowIdx});
+            }
+        } else {
+            return true;
+        }
+    }
+
+    function handleTouchEnd() {
+        if (touchToView) {
+            setShowList(false)
+        } else {
+            saveSelectionState();
+
+            // cleanup
+            setSelecting(false)
+            setRemoving(false)
+            setToHere({colIdx: undefined, rowIdx: undefined});
+        }
+    }
+
     const [somethingSelected, setSomethingSelected] = useState(false)
     function clearSelection() {
         const newIntervalsGrid = intervalsGrid.slice();
@@ -226,6 +272,32 @@ function AvailabilityGrid(props) {
         // only returns true if the difference in hours between this and next column interval is 24 hours
         if (currentIdx === intervalsGrid.length - 1) { return false }
         return 24 === differenceInHours(intervalsGrid[currentIdx + 1][0].time, intervalsGrid[currentIdx][0].time)
+    }
+
+    // Content of availability list: showing availabilities or (mobile-only) toggle selecting -> viewing
+    let availabilityListCardContent = <></>
+    if (showList) { // if hovering or touching show the availability list
+        availabilityListCardContent = (
+            <AvailabilityList
+                totalNames={props.availabilities.length}
+                intervalDatetime={intervalDatetime}
+                namesAvailable={namesAvailable}
+                namesUnavailable={namesUnavailable}
+            />
+        )
+    } else if (props.isMobile) { // if mobile, show a switch to turn on touch viewing
+        availabilityListCardContent = (
+            <div className="availabilitySwitch">
+                <span>Add Yours</span>
+                &nbsp;
+                <Form.Switch
+                    checked={touchToView}
+                    onChange={()=>{setTouchToView(!touchToView)}}
+                />
+                &nbsp;
+                <span>See Others&apos;</span>
+            </div>
+        )
     }
 
     return (
@@ -248,9 +320,9 @@ function AvailabilityGrid(props) {
                         onMouseDown={handleMouseDown}
                         onMouseOver={handleMouseOver}
                         onMouseOut={handleMouseOut}
-                        onTouchStart={handleMouseDown}
+                        onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
-                        onTouchEnd={handleMouseUp}
+                        onTouchEnd={handleTouchEnd}
                     />
                 )})}
                 </div>
@@ -266,14 +338,7 @@ function AvailabilityGrid(props) {
                 {maxAvailableCount > 0 && (
                     <div className="availabilityListSpace">
                         <Card className="availabilityListCard">
-                        {showList &&
-                            <AvailabilityList
-                                totalNames={props.availabilities.length}
-                                intervalDatetime={intervalDatetime}
-                                namesAvailable={namesAvailable}
-                                namesUnavailable={namesUnavailable}
-                            />
-                        }
+                            {availabilityListCardContent}
                         </Card>
                     </div>
                 )}

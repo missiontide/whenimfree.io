@@ -26,7 +26,7 @@ function AvailabilityApp(props) {
             window.removeEventListener('resize', handleWindowSizeChange);
         }
     }, []);
-    const isMobile = () => {return width <= 600}
+    const isMobile = () => {return width <= 480}
 
     /*
     ERROR HANDLING
@@ -189,7 +189,7 @@ function AvailabilityApp(props) {
                         startTime={props.startTime}
                         endTime={props.endTime}
                         selectedTimezone={selectedTimezone}
-                        isMobile={isMobile}
+                        isMobile={isMobile()}
                     />
                 </Card.Body>
                 <Card.Footer>
