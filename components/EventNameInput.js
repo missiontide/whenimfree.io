@@ -14,7 +14,6 @@ function EventNameInput(props) {
                     value={props.eventName}
                     onChange={handleChange}
                     placeholder="Friends Hangout"
-                    autoFocus
                 />
             </div>
         </>

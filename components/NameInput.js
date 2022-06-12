@@ -13,7 +13,6 @@ function Name(props) {
                 value={props.eventName}
                 onChange={handleChange}
                 placeholder="Enter your name..."
-                autoFocus
             />
         </div>
     );
