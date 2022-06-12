@@ -180,6 +180,11 @@ function AvailabilityApp(props) {
                         </div>
                     )}
                 </Card.Header>
+                {isMobile() && (
+                    <span className="switchCaption">
+                        Touch a time to select when you're free
+                    </span>
+                )}
                 <Card.Body>
                     <AvailabilityGrid
                         availabilities={props.availabilities}
