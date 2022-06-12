@@ -19,7 +19,7 @@ export default function Home() {
               <meta property="og:url" content="https://whenimfree.io" />
               <meta property="og:title" content="whenimfree.io - Get availability fast!" />
               <meta property="og:description" content="Quickly find the best time for an event with friends!" />
-              <meta property="og:image" content="../public/social-media-card.png" />
+              <meta property="og:image" content="https://whenimfree.io/social-media-card.png" />
               <meta property="og:type" content="website" />
           </Head>
       </>
