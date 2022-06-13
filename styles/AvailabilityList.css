@@ -11,13 +11,6 @@
     height: inherit;
 }
 
-.listCaption {
-    position: absolute;
-    margin-top: 11px;
-    font-size: 14px;
-    left: 30px;
-}
-
 .listInfo {
     float: left;
     height: 100%;

@@ -67,11 +67,15 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.badgeDiv {
+.clearSelectionDiv {
     height: 24px;
     margin-bottom: 8px;
     clear: both;
 }
 .clearBadge {
     cursor: pointer;
+}
+.clearSelectionDiv p {
+    padding-top: 5px;
+    font-size: 14px;
 }

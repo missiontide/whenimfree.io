@@ -309,11 +309,20 @@ function AvailabilityGrid(props) {
                 </div>
             </>
         )
+    } else { // not mobile and not mouse over-ing, display instruction
+        availabilityListCardContent = <p className="caption">Mouseover a time to see others&apos; availability.</p>
     }
 
     return (
         <>
             <div className="availabilityGrid">
+                {maxAvailableCount > 0 && (
+                    <div className="availabilityListSpace">
+                        <Card className="availabilityListCard">
+                            {availabilityListCardContent}
+                        </Card>
+                    </div>
+                )}
                 <div className="gridSpace">
                 {intervalsGrid.length > 0 &&
                     <TimeColumn
@@ -337,22 +346,14 @@ function AvailabilityGrid(props) {
                     />
                 )})}
                 </div>
-                <div className="badgeDiv">
-                    {props.availabilities.length > 0 && <span className="listCaption">Availability:</span>}
-                    {somethingSelected &&
+                <div className="clearSelectionDiv">
+                    {somethingSelected ?
                         <ClearButton
                             text="Clear Selection"
                             onClick={clearSelection}
-                        />
+                        /> : <p>{!props.isMobile && "Click and drag to indicate your availability."}</p>
                     }
                 </div>
-                {maxAvailableCount > 0 && (
-                    <div className="availabilityListSpace">
-                        <Card className="availabilityListCard">
-                            {availabilityListCardContent}
-                        </Card>
-                    </div>
-                )}
             </div>
 
         </>

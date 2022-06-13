@@ -168,19 +168,8 @@ function AvailabilityApp(props) {
                             onChange={setSelectedTimezone}
                         />
                     </div>
-                    {!isMobile() && (
-                        <div className="caption">
-                            {props.availabilities.length > 0 ? (
-                                <p>Click and drag to indicate your availability.<br/>
-                                    Mouseover to see others&apos; availability.</p>
-                            ) : (
-                                <p><br/>Click and drag to indicate your availability.</p>
-                            )}
-
-                        </div>
-                    )}
                 </Card.Header>
-                {isMobile() && (
+                {isMobile() && props.availabilities.length === 0 && (
                     <span className="switchCaption">
                         Touch a time to select when you&apos;re free
                     </span>
