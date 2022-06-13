@@ -6,6 +6,7 @@
     overflow-y: hidden;
     white-space: nowrap;
     margin: 0 auto;
+    padding-bottom: 60px;
 }
 
 /* TIME and DAY COLUMNS*/
@@ -69,8 +70,9 @@
 
 .clearSelectionDiv {
     height: 24px;
-    margin-bottom: 8px;
-    clear: both;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
 }
 .clearBadge {
     cursor: pointer;

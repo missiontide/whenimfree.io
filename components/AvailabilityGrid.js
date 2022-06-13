@@ -324,35 +324,35 @@ function AvailabilityGrid(props) {
                     </div>
                 )}
                 <div className="gridSpace">
-                {intervalsGrid.length > 0 &&
-                    <TimeColumn
-                        timeIntervals={intervalsGrid[0]}
-                    />
-                }
-
-                {intervalsGrid.map((col, colIdx) => { return (
-                    <DayColumn
-                        key={colIdx}
-                        colIdx={colIdx}
-                        nextDayIsAdjacent={nextDayIsAdjacent(colIdx)}
-                        timeIntervals={col}
-                        maxAvailableCount={maxAvailableCount}
-                        onMouseDown={handleMouseDown}
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
-                    />
-                )})}
-                </div>
-                <div className="clearSelectionDiv">
-                    {somethingSelected ?
-                        <ClearButton
-                            text="Clear Selection"
-                            onClick={clearSelection}
-                        /> : <p>{!props.isMobile && "Click and drag to select when you're free."}</p>
+                    {intervalsGrid.length > 0 &&
+                        <TimeColumn
+                            timeIntervals={intervalsGrid[0]}
+                        />
                     }
+
+                    {intervalsGrid.map((col, colIdx) => { return (
+                        <DayColumn
+                            key={colIdx}
+                            colIdx={colIdx}
+                            nextDayIsAdjacent={nextDayIsAdjacent(colIdx)}
+                            timeIntervals={col}
+                            maxAvailableCount={maxAvailableCount}
+                            onMouseDown={handleMouseDown}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        />
+                    )})}
+                    <div className="clearSelectionDiv">
+                        {somethingSelected ?
+                            <ClearButton
+                                text="Clear Selection"
+                                onClick={clearSelection}
+                            /> : <p>{!props.isMobile && "Click and drag to select when you're free."}</p>
+                        }
+                    </div>
                 </div>
             </div>
 

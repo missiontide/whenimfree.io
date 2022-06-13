@@ -139,26 +139,6 @@ function AvailabilityApp(props) {
             </ToastContainer>
             <h3 className="availabilityHeader">
                 <b>{props.eventName}</b>&nbsp;&nbsp;
-                <>
-                    <OverlayTrigger
-                        placement="top"
-                        trigger={['hover', 'focus']}
-                        overlay={(
-                            <UpdatingTooltip >
-                                {tooltipText}
-                            </UpdatingTooltip>
-                        )}>
-                        <Button
-                            variant="outline-dark"
-                            onClick={() => {
-                                navigator.clipboard.writeText(window.location.href);
-                                setTooltipText("Copied!");
-                            }}
-                            onMouseEnter={() => setTooltipText("Copy Link")}>
-                            <IoIosCopy />
-                        </Button>
-                    </OverlayTrigger>
-                </>
             </h3>
             <Card className="availabilityCard">
                 <Card.Header>
@@ -168,6 +148,27 @@ function AvailabilityApp(props) {
                             onChange={setSelectedTimezone}
                         />
                     </div>
+                    <>
+                        <OverlayTrigger
+                            placement={isMobile() ? "left" : "top"}
+                            trigger={['hover', 'focus']}
+                            overlay={(
+                                <UpdatingTooltip >
+                                    {tooltipText}
+                                </UpdatingTooltip>
+                            )}>
+                            <Button
+                                className="copyButton"
+                                variant="outline-secondary"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.href);
+                                    setTooltipText(isMobile() ? "Link Copied!" : "Copied!");
+                                }}
+                                onMouseEnter={() => setTooltipText("Copy Link")}>
+                                <IoIosCopy />
+                            </Button>
+                        </OverlayTrigger>
+                    </>
                 </Card.Header>
                 {isMobile() && props.availabilities.length === 0 && (
                     <span className="switchCaption">
