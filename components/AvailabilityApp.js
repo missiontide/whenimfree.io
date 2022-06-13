@@ -182,7 +182,7 @@ function AvailabilityApp(props) {
                 </Card.Header>
                 {isMobile() && (
                     <span className="switchCaption">
-                        Touch a time to select when you're free
+                        Touch a time to select when you&apos;re free
                     </span>
                 )}
                 <Card.Body>
