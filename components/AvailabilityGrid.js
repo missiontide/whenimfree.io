@@ -351,7 +351,7 @@ function AvailabilityGrid(props) {
                         <ClearButton
                             text="Clear Selection"
                             onClick={clearSelection}
-                        /> : <p>{!props.isMobile && "Click and drag to show when you're free."}</p>
+                        /> : <p>{!props.isMobile && "Click and drag to select when you're free."}</p>
                     }
                 </div>
             </div>
