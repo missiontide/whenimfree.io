@@ -24,11 +24,11 @@ function Page({
                 <p className="signature">
                     made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
                 </p>
-                <p className="pLogo">
+                <span className="spanLogo">
                     <Link href="/">
                         <a><Image src={logo} className="App-logo" alt="logo" /></a>
                     </Link>
-                </p>
+                </span>
                 <AvailabilityApp
                     scheduler_id={id}
                     eventName={eventName}

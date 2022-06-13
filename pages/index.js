@@ -11,7 +11,9 @@ export default function Home() {
               <p className="signature">
                   made by <a href="https://www.missiontide.com" target="_blank" rel="noreferrer">@missiontide</a>
               </p>
-              <Image src={logo} className="App-logo" alt="logo" />
+              <span className="spanLogo">
+                  <Image src={logo} className="App-logo" alt="logo" />
+              </span>
               <CreateScheduler />
           </div>
           <Head>
