@@ -25,7 +25,7 @@ function AvailabilityGrid(props) {
     const intervalsGrid = props.intervalsGrid;
     const setIntervalsGrid = props.setIntervalsGrid;
     const [maxAvailableCount, setMaxAvailableCount] = useState(0)
-    const [touchToView, setTouchToView] = useState(false)
+    const [touchToAdd, setTouchToAdd] = useState(props.availabilities.length === 0 ? true : false)
 
     // initializing intervals grid
     useEffect(() => {
@@ -207,7 +207,7 @@ function AvailabilityGrid(props) {
     TOUCH SUPPORT
     */
     function handleTouchStart(selectedInterval){
-        if (touchToView) {
+        if (!touchToAdd) {
             // viewing availabilities
             setShowList(true)
             setNamesAvailable(selectedInterval.namesAvailable)
@@ -231,7 +231,7 @@ function AvailabilityGrid(props) {
             if (colIdx === null || rowIdx === null) return true;
 
             const selectedInterval = intervalsGrid[colIdx][rowIdx]
-            if (touchToView) {
+            if (!touchToAdd) {
                 // viewing availabilities
                 setNamesAvailable(selectedInterval.namesAvailable)
                 setNamesUnavailable(selectedInterval.namesUnavailable)
@@ -246,7 +246,7 @@ function AvailabilityGrid(props) {
     }
 
     function handleTouchEnd() {
-        if (touchToView) {
+        if (!touchToAdd) {
             setShowList(false)
         } else {
             saveSelectionState();
@@ -293,24 +293,24 @@ function AvailabilityGrid(props) {
         availabilityListCardContent = (
             <>
                 <span className="switchCaption">
-                    {touchToView ? "Touch a time to see who's free" : "Touch a time to select when you're free"}
+                    {touchToAdd ? "Touch a time to select when you're free" : "Touch a time to see who's free" }
                 </span>
 
                 <div className="availabilitySwitch">
 
-                    <span>Add Yours</span>
+                    <span>See Others&apos;</span>
                     &nbsp;
                     <Form.Switch
-                        checked={touchToView}
-                        onChange={()=>{setTouchToView(!touchToView)}}
+                        checked={touchToAdd}
+                        onChange={()=>{setTouchToAdd(!touchToAdd)}}
                     />
                     &nbsp;
-                    <span>See Others&apos;</span>
+                    <span>Add Yours</span>
                 </div>
             </>
         )
     } else { // not mobile and not mouse over-ing, display instruction
-        availabilityListCardContent = <p className="caption">Mouseover a time to see others&apos; availability.</p>
+        availabilityListCardContent = <p className="caption">Mouseover a time to see who&apos;s free.</p>
     }
 
     return (
@@ -351,7 +351,7 @@ function AvailabilityGrid(props) {
                         <ClearButton
                             text="Clear Selection"
                             onClick={clearSelection}
-                        /> : <p>{!props.isMobile && "Click and drag to indicate your availability."}</p>
+                        /> : <p>{!props.isMobile && "Click and drag to show when you're free."}</p>
                     }
                 </div>
             </div>
