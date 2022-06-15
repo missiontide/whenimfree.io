@@ -67,10 +67,12 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
+.availbilityCard .card-body {
+    position: relative; /* for clear selection div positioning*/
+}
 .clearSelectionDiv {
     height: 24px;
-    position: fixed;
+    position: absolute;
     left: 50%;
     transform: translate(-50%);
 }
